@@ -1,4 +1,4 @@
-package org.example;
+package org.example.pages;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -7,6 +7,7 @@ import org.example.annotations.Path;
 import org.example.annotations.Template;
 import org.example.annotations.UrlTemplate;
 import org.example.exceptions.PathNotFoundException;
+import org.example.pageobject.AbsPageObject;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -48,9 +49,13 @@ public class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObject {
     return (T) this;
   }
 
+  /**
+   .
+   */
   @SuppressWarnings("unchecked")
   public T open() {
-    driver.get(StringUtils.appendIfMissing(BASE_URL, "/") + getPath());
+    String url = StringUtils.appendIfMissing(BASE_URL, "/") + getPath();
+    driver.get(url);
     return (T) this;
   }
 }

@@ -22,7 +22,23 @@
         <spotbugs-maven-plugin.version>4.7.2.1</spotbugs-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
         <commons-lang3.version>3.13.0</commons-lang3.version>
+        <browser>chrome</browser>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>chrome</id>
+            <properties>
+                <browser>chrome</browser>
+            </properties>
+        </profile>
+        <profile>
+            <id>firefox</id>
+            <properties>
+                <browser>firefox</browser>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
@@ -68,8 +84,6 @@
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -79,9 +93,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
                 <configuration>
-                    <systemProperties>
+                    <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
-                    </systemProperties>
+                        <browser>${browser}</browser>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>

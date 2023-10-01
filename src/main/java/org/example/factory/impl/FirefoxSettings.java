@@ -9,7 +9,6 @@ public class FirefoxSettings implements BrowserSettings<FirefoxOptions> {
 
   @Override
   public FirefoxOptions configureDriver() {
-    FirefoxOptions firefoxOptions = new FirefoxOptions();
-    return firefoxOptions;
+    return new FirefoxOptions();
   }
 }

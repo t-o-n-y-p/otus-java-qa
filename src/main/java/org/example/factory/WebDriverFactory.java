@@ -5,41 +5,43 @@ import org.example.exceptions.BrowserNotSupportedException;
 import org.example.factory.impl.BrowserSettings;
 import org.example.factory.impl.ChromeSettings;
 import org.example.factory.impl.FirefoxSettings;
-import org.example.factory.impl.OperaSettings;
+import org.example.listeners.ActionsListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.events.EventFiringDecorator;
 
 /**
  .
  */
 public class WebDriverFactory {
 
-  private final String browserName = System.getProperty("browser", "chrome");
+  public static final String BROWSER_NAME = System.getProperty("browser", "chrome");
 
   /**
    .
    */
   public WebDriver create() {
-    switch (browserName) {
+    switch (BROWSER_NAME) {
       case "chrome" -> {
         WebDriverManager.chromedriver().setup();
         BrowserSettings<ChromeOptions> browserSettings = new ChromeSettings();
-        return new ChromeDriver(browserSettings.configureDriver());
+        WebDriver driver = new EventFiringDecorator<>(new ActionsListener())
+            .decorate(new ChromeDriver(browserSettings.configureDriver()));
+        driver.manage().window().maximize();
+        return driver;
       }
       case "firefox" -> {
         WebDriverManager.firefoxdriver().setup();
         BrowserSettings<FirefoxOptions> browserSettings = new FirefoxSettings();
-        return new FirefoxDriver(browserSettings.configureDriver());
+        WebDriver driver = new EventFiringDecorator<>(new ActionsListener())
+            .decorate(new FirefoxDriver(browserSettings.configureDriver()));
+        driver.manage().window().maximize();
+        return driver;
       }
-      case "opera" -> {
-        WebDriverManager.operadriver().setup();
-        BrowserSettings<ChromeOptions> browserSettings = new OperaSettings();
-        return new ChromeDriver(browserSettings.configureDriver());
-      }
-      default -> throw new BrowserNotSupportedException(browserName);
+      default -> throw new BrowserNotSupportedException(BROWSER_NAME);
     }
   }
 
