@@ -22,9 +22,7 @@ public class AfterEachExtension extends BaseGuiceExtension implements AfterEachC
                 .stream()
                 .filter(injectionPoint ->
                     injectionPoint.getMember() instanceof Field
-                        && WebDriver.class.equals(((Field) injectionPoint.getMember()).getType())
-                        && instance.getClass().equals(
-                            ((Field) injectionPoint.getMember()).getDeclaringClass()))
+                        && WebDriver.class.equals(((Field) injectionPoint.getMember()).getType()))
                 .map(injectionPoint -> (Field) injectionPoint.getMember())
                 .forEach(field -> quitDriverFromField(instance, field))
         );
