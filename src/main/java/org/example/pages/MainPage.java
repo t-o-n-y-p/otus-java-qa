@@ -1,6 +1,5 @@
 package org.example.pages;
 
-import java.util.Comparator;
 import java.util.List;
 import org.example.annotations.Path;
 import org.example.components.CourseCard;
