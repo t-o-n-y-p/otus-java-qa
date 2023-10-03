@@ -1,8 +1,7 @@
 package org.example;
 
 import com.google.inject.Inject;
-import org.example.extensions.AfterEachExtension;
-import org.example.extensions.BeforeEachExtension;
+import org.example.extensions.GuiceExtension;
 import org.example.pages.MainPage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,14 +12,13 @@ import org.openqa.selenium.WebDriver;
 /**
  .
  */
-@ExtendWith({
-    BeforeEachExtension.class,
-    AfterEachExtension.class
-})
+@ExtendWith(GuiceExtension.class)
 public class FindProgramTest {
 
   @Inject
   private WebDriver driver;
+  @Inject
+  private MainPage mainPage;
 
   @ParameterizedTest
   @ValueSource(strings = {
@@ -28,7 +26,7 @@ public class FindProgramTest {
       "Специализация Administrator Linux"
   })
   void testProgramByName(String programName) {
-    new MainPage(driver)
+    mainPage
         .open()
         .selectProgramByName(programName);
 
@@ -36,7 +34,7 @@ public class FindProgramTest {
 
   @Test
   void testProgramByEarliestStartDate() {
-    new MainPage(driver)
+    mainPage
         .open()
         .selectProgramByEarliestStartDate();
   }
