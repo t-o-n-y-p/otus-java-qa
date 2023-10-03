@@ -1,18 +1,24 @@
 package org.example.pageobject;
 
+import org.example.actions.CommonActions;
+import org.example.waiters.CommonWaiter;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 
 /**
  .
  */
 public abstract class AbsPageObject {
 
-  protected WebDriver driver;
-  protected Actions actions;
+  protected final WebDriver driver;
+  protected final CommonActions actions;
+  protected final CommonWaiter waiter;
 
+  /**
+   .
+   */
   public AbsPageObject(WebDriver driver) {
     this.driver = driver;
-    actions = new Actions(driver);
+    actions = new CommonActions(driver);
+    waiter = new CommonWaiter(driver);
   }
 }
