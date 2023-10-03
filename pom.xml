@@ -22,7 +22,6 @@
         <spotbugs-maven-plugin.version>4.7.2.1</spotbugs-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
         <commons-lang3.version>3.13.0</commons-lang3.version>
-        <browser>chrome</browser>
     </properties>
 
     <profiles>
@@ -30,12 +29,14 @@
             <id>chrome</id>
             <properties>
                 <browser>chrome</browser>
+                <suite>org.example.suite.HomeworkOneSuite</suite>
             </properties>
         </profile>
         <profile>
             <id>firefox</id>
             <properties>
                 <browser>firefox</browser>
+                <suite>org.example.suite.HomeworkOneSuite</suite>
             </properties>
         </profile>
     </profiles>
@@ -63,6 +64,13 @@
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
+            <version>1.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
@@ -93,6 +101,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
                 <configuration>
+                    <test>${suite}</test>
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
                         <browser>${browser}</browser>

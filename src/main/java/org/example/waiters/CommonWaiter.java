@@ -11,13 +11,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class CommonWaiter {
 
-  private static final Duration duration = Duration.ofMillis(
+  private static final Duration DURATION = Duration.ofMillis(
       Integer.parseInt(System.getProperty("webdriver.timeouts.implicitly-wait", "5000")));
 
   private final WebDriverWait wait;
 
   public CommonWaiter(WebDriver driver) {
-    wait = new WebDriverWait(driver, duration);
+    wait = new WebDriverWait(driver, DURATION);
   }
 
   /**
