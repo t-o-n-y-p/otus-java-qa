@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.openqa.selenium.WebDriver;
 
 /**
  .
@@ -15,8 +14,6 @@ import org.openqa.selenium.WebDriver;
 @ExtendWith(GuiceExtension.class)
 public class FindProgramTest {
 
-  @Inject
-  private WebDriver driver;
   @Inject
   private MainPage mainPage;
 
