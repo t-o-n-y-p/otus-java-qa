@@ -1,6 +1,7 @@
 package org.example.pages;
 
 import com.google.inject.Inject;
+import java.time.LocalDate;
 import java.util.List;
 import org.example.annotations.Path;
 import org.example.components.CourseCard;
@@ -27,6 +28,16 @@ public class MainPage extends AbsBasePage<MainPage> {
   private List<CourseCard> getProgramCards() {
     return driver.findElements(By.xpath("//section[./h2[text()='Специализации']]/div/div")).stream()
         .map(e -> scoped == null ? new CourseCard(driver, e) : new CourseCard(scoped, e))
+        .toList();
+  }
+
+  /**
+   .
+   */
+  public List<CourseCard> getProgramCardsWithDateEqualOrAfter(LocalDate date) {
+    return driver.findElements(By.xpath("//section[./h2[text()='Специализации']]/div/div")).stream()
+        .map(e -> scoped == null ? new CourseCard(driver, e) : new CourseCard(scoped, e))
+        .filter(c -> !c.getStartDate().isBefore(date))
         .toList();
   }
 

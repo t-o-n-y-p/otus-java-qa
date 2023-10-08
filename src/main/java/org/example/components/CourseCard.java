@@ -40,4 +40,9 @@ public class CourseCard extends AbsComponent {
         String.join(" ", parsedText[1], parsedText[2], parsedText[3]),
         DateTimeUtil.COURSE_START_DAY_MONTH_YEAR_FORMATTER);
   }
+
+  @Override
+  public String toString() {
+    return "Курс %s, стартует %s".formatted(getTitle(), getStartDate());
+  }
 }
