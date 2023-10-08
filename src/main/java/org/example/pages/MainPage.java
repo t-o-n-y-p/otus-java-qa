@@ -1,9 +1,11 @@
 package org.example.pages;
 
+import com.google.inject.Inject;
 import java.util.List;
 import org.example.annotations.Path;
 import org.example.components.CourseCard;
 import org.example.exceptions.ProgramCardNotFoundException;
+import org.example.support.GuiceScoped;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -17,9 +19,15 @@ public class MainPage extends AbsBasePage<MainPage> {
     super(driver);
   }
 
+  @Inject
+  public MainPage(GuiceScoped scoped) {
+    super(scoped);
+  }
+
   private List<CourseCard> getProgramCards() {
     return driver.findElements(By.xpath("//section[./h2[text()='Специализации']]/div/div")).stream()
-        .map(e -> new CourseCard(driver, e)).toList();
+        .map(e -> scoped == null ? new CourseCard(driver, e) : new CourseCard(scoped, e))
+        .toList();
   }
 
   /**

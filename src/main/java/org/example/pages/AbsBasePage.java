@@ -1,5 +1,6 @@
 package org.example.pages;
 
+import com.google.inject.Inject;
 import java.util.Arrays;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +9,7 @@ import org.example.annotations.Template;
 import org.example.annotations.UrlTemplate;
 import org.example.exceptions.PathNotFoundException;
 import org.example.pageobject.AbsPageObject;
+import org.example.support.GuiceScoped;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -19,6 +21,11 @@ public class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObject {
 
   public AbsBasePage(WebDriver driver) {
     super(driver);
+  }
+
+  @Inject
+  public AbsBasePage(GuiceScoped scoped) {
+    super(scoped);
   }
 
   private String getPath(String name, String... params) {

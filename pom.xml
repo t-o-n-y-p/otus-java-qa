@@ -22,6 +22,8 @@
         <spotbugs-maven-plugin.version>4.7.2.1</spotbugs-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
         <commons-lang3.version>3.13.0</commons-lang3.version>
+        <cucumber.version>7.14.0</cucumber.version>
+        <browser>chrome</browser>
     </properties>
 
     <profiles>
@@ -37,6 +39,12 @@
             <properties>
                 <browser>firefox</browser>
                 <suite>org.example.suite.HomeworkOneSuite</suite>
+            </properties>
+        </profile>
+        <profile>
+            <id>cucumber</id>
+            <properties>
+                <suite>org.example.suite.HomeworkTwoSuite</suite>
             </properties>
         </profile>
     </profiles>
@@ -92,6 +100,30 @@
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-guice</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.24.2</version>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>

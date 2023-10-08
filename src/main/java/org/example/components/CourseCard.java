@@ -2,6 +2,7 @@ package org.example.components;
 
 import java.time.LocalDate;
 import java.util.List;
+import org.example.support.GuiceScoped;
 import org.example.utils.DateTimeUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +15,10 @@ public class CourseCard extends AbsComponent {
 
   public CourseCard(WebDriver driver, WebElement root) {
     super(driver, root);
+  }
+
+  public CourseCard(GuiceScoped scoped, WebElement root) {
+    super(scoped, root);
   }
 
   public String getTitle() {
