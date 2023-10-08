@@ -2,6 +2,5 @@
 - иметь Java 17+
 - иметь браузеры Chrome и Firefox версий, бьющихся с версиями драйверов
 
-Варианты запуска в зависимости от желаемого браузера:
-- mvn test -P chrome
-- mvn test -P firefox
+Запуск:
+- mvn test -P cucumber
