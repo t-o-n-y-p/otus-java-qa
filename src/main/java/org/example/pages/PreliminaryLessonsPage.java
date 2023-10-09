@@ -3,6 +3,7 @@ package org.example.pages;
 import com.google.inject.Inject;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.example.annotations.Path;
 import org.example.components.PreliminaryCourseCard;
 import org.example.exceptions.ProgramCardNotFoundException;
@@ -21,8 +22,11 @@ public class PreliminaryLessonsPage extends AbsBasePage<PreliminaryLessonsPage> 
   }
 
   private List<PreliminaryCourseCard> getCourseCards() {
+    AtomicInteger atomicInteger = new AtomicInteger(1);
     return driver.findElements(By.xpath("//div[@class='lessons']/a")).stream()
-        .map(e -> new PreliminaryCourseCard(scoped, e))
+        .map(e -> new PreliminaryCourseCard(
+            scoped,
+            "(//div[@class='lessons']/a)[%d]".formatted(atomicInteger.getAndIncrement())))
         .toList();
   }
 

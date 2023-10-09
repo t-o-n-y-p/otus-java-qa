@@ -13,23 +13,23 @@ import org.openqa.selenium.WebElement;
  */
 public class CourseCard extends AbsComponent {
 
-  public CourseCard(WebDriver driver, WebElement root) {
-    super(driver, root);
+  public CourseCard(WebDriver driver, String xpath) {
+    super(driver, xpath);
   }
 
-  public CourseCard(GuiceScoped scoped, WebElement root) {
-    super(scoped, root);
+  public CourseCard(GuiceScoped scoped, String xpath) {
+    super(scoped, xpath);
   }
 
   public String getTitle() {
-    return root.findElement(By.tagName("h5")).getText();
+    return driver.findElement(By.xpath(xpath + "//h5")).getText();
   }
 
   /**
    .
    */
   public LocalDate getStartDate() {
-    List<WebElement> spans = root.findElements(By.tagName("span"));
+    List<WebElement> spans = driver.findElements(By.xpath(xpath + "//span"));
     String[] parsedText = spans.get(spans.size() - 1).getText().split("\\s+");
     if (parsedText.length == 5) {
       return LocalDate.parse(

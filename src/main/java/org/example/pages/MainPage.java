@@ -3,7 +3,9 @@ package org.example.pages;
 import com.google.inject.Inject;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BinaryOperator;
+import java.util.function.Predicate;
 import org.example.annotations.Path;
 import org.example.components.CourseCard;
 import org.example.exceptions.ProgramCardNotFoundException;
@@ -27,18 +29,24 @@ public class MainPage extends AbsBasePage<MainPage> {
   }
 
   private List<CourseCard> getProgramCards() {
-    return driver.findElements(By.xpath("//section[./h2[text()='Специализации']]/div/div")).stream()
-        .map(e -> scoped == null ? new CourseCard(driver, e) : new CourseCard(scoped, e))
-        .toList();
+    return getCardsWithFilter(c -> true);
   }
 
-  /**
-   .
-   */
   public List<CourseCard> getProgramCardsWithDateEqualOrAfter(LocalDate date) {
+    return getCardsWithFilter(c -> !c.getStartDate().isBefore(date));
+  }
+
+  private List<CourseCard> getCardsWithFilter(Predicate<CourseCard> condition) {
+    String elementSelector = "(//section[./h2[text()='Специализации']]/div/div)[%d]";
+    AtomicInteger atomicInteger = new AtomicInteger(1);
     return driver.findElements(By.xpath("//section[./h2[text()='Специализации']]/div/div")).stream()
-        .map(e -> scoped == null ? new CourseCard(driver, e) : new CourseCard(scoped, e))
-        .filter(c -> !c.getStartDate().isBefore(date))
+        .map(e -> {
+          int index = atomicInteger.getAndIncrement();
+          return scoped == null
+              ? new CourseCard(driver, elementSelector.formatted(index))
+              : new CourseCard(scoped, elementSelector.formatted(index));
+        })
+        .filter(condition)
         .toList();
   }
 
