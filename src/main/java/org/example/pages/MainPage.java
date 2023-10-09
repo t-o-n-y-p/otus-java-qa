@@ -37,14 +37,14 @@ public class MainPage extends AbsBasePage<MainPage> {
   }
 
   private List<CourseCard> getCardsWithFilter(Predicate<CourseCard> condition) {
-    String elementSelector = "(//section[./h2[text()='Специализации']]/div/div)[%d]";
+    String collectionSelector = "//section[./h2[text()='Специализации']]/div/div";
     AtomicInteger atomicInteger = new AtomicInteger(1);
-    return driver.findElements(By.xpath("//section[./h2[text()='Специализации']]/div/div")).stream()
+    return driver.findElements(By.xpath(collectionSelector)).stream()
         .map(e -> {
           int index = atomicInteger.getAndIncrement();
           return scoped == null
-              ? new CourseCard(driver, elementSelector.formatted(index))
-              : new CourseCard(scoped, elementSelector.formatted(index));
+              ? new CourseCard(driver, "(%s)[%d]".formatted(collectionSelector, index))
+              : new CourseCard(scoped, "(%s)[%d]".formatted(collectionSelector, index));
         })
         .filter(condition)
         .toList();

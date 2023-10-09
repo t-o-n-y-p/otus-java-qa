@@ -22,11 +22,12 @@ public class PreliminaryLessonsPage extends AbsBasePage<PreliminaryLessonsPage> 
   }
 
   private List<PreliminaryCourseCard> getCourseCards() {
+    String collectionSelector = "//div[@class='lessons']/a";
     AtomicInteger atomicInteger = new AtomicInteger(1);
-    return driver.findElements(By.xpath("//div[@class='lessons']/a")).stream()
+    return driver.findElements(By.xpath(collectionSelector)).stream()
         .map(e -> new PreliminaryCourseCard(
             scoped,
-            "(//div[@class='lessons']/a)[%d]".formatted(atomicInteger.getAndIncrement())))
+            "(%s)[%d]".formatted(collectionSelector, atomicInteger.getAndIncrement())))
         .toList();
   }
 
