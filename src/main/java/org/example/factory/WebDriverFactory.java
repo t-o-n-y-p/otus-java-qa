@@ -1,6 +1,7 @@
 package org.example.factory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import java.time.Duration;
 import org.example.exceptions.BrowserNotSupportedException;
 import org.example.factory.impl.BrowserSettings;
 import org.example.factory.impl.ChromeSettings;
@@ -39,6 +40,7 @@ public class WebDriverFactory {
         WebDriver driver = new EventFiringDecorator<>(new ActionsListener())
             .decorate(new FirefoxDriver(browserSettings.configureDriver()));
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return driver;
       }
       default -> throw new BrowserNotSupportedException(BROWSER_NAME);

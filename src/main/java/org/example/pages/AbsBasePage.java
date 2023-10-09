@@ -13,7 +13,7 @@ import org.openqa.selenium.WebDriver;
 /**
  .
  */
-public class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObject {
+public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObject {
 
   public static final String BASE_URL = System.getProperty("base.url");
 
