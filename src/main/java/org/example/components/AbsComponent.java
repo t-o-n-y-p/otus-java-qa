@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 /**
  .
  */
-public class AbsComponent extends AbsPageObject {
+public abstract class AbsComponent extends AbsPageObject {
 
   protected final WebElement root;
 

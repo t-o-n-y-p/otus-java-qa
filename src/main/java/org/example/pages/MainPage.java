@@ -3,6 +3,7 @@ package org.example.pages;
 import com.google.inject.Inject;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.BinaryOperator;
 import org.example.annotations.Path;
 import org.example.components.CourseCard;
 import org.example.exceptions.ProgramCardNotFoundException;
@@ -61,10 +62,22 @@ public class MainPage extends AbsBasePage<MainPage> {
    .
    */
   public void selectProgramByEarliestStartDate() {
+    selectProgramByReduce(
+        (card1, card2) -> card1.getStartDate().isBefore(card2.getStartDate()) ? card1 : card2);
+  }
+
+  /**
+   .
+   */
+  public void selectProgramByLatestStartDate() {
+    selectProgramByReduce(
+        (card1, card2) -> card1.getStartDate().isAfter(card2.getStartDate()) ? card1 : card2);
+  }
+
+  private void selectProgramByReduce(BinaryOperator<CourseCard> reduce) {
     getProgramCards()
         .stream()
-        .reduce((card1, card2) ->
-            card1.getStartDate().isBefore(card2.getStartDate()) ? card1 : card2)
+        .reduce(reduce)
         .ifPresentOrElse(
             CourseCard::click,
             () -> {

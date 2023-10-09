@@ -1,7 +1,9 @@
 package org.example;
 
 import com.google.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 import org.example.extensions.GuiceExtension;
+import org.example.pages.LessonPage;
 import org.example.pages.MainPage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +19,9 @@ public class FindProgramTest {
   @Inject
   private MainPage mainPage;
 
+  @Inject
+  private LessonPage lessonPage;
+
   @ParameterizedTest
   @ValueSource(strings = {
       "Специализация Java-разработчик",
@@ -26,6 +31,8 @@ public class FindProgramTest {
     mainPage
         .open()
         .selectProgramByName(programName);
+    lessonPage.checkLessonNameEquals(
+        StringUtils.substringAfter(programName, "Специализация "));
 
   }
 
@@ -34,5 +41,14 @@ public class FindProgramTest {
     mainPage
         .open()
         .selectProgramByEarliestStartDate();
+    lessonPage.checkLessonNameIsNotNull();
+  }
+
+  @Test
+  void testProgramByLatestStartDate() {
+    mainPage
+        .open()
+        .selectProgramByLatestStartDate();
+    lessonPage.checkLessonNameIsNotNull();
   }
 }
