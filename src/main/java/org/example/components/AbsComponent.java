@@ -3,6 +3,7 @@ package org.example.components;
 import org.example.pageobject.AbsPageObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
  .
@@ -17,6 +18,7 @@ public abstract class AbsComponent extends AbsPageObject {
   }
 
   public void click() {
+    waiter.waitForCondition(ExpectedConditions.stalenessOf(root));
     actions.click(root);
   }
 }
