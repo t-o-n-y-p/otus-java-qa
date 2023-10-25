@@ -24,6 +24,7 @@
         <commons-lang3.version>3.13.0</commons-lang3.version>
         <cucumber.version>7.14.0</cucumber.version>
         <browser>chrome</browser>
+        <rest-assured.version>5.3.2</rest-assured.version>
     </properties>
 
     <profiles>
@@ -45,6 +46,12 @@
             <id>cucumber</id>
             <properties>
                 <suite>org.example.suite.HomeworkTwoSuite</suite>
+            </properties>
+        </profile>
+        <profile>
+            <id>petstore</id>
+            <properties>
+                <suite>org.example.suite.HomeworkThreeSuite</suite>
             </properties>
         </profile>
     </profiles>
@@ -121,7 +128,21 @@
             <artifactId>assertj-core</artifactId>
             <version>3.24.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.3</version>
+        </dependency>
 
     </dependencies>
 
