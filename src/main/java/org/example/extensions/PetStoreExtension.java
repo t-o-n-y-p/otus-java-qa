@@ -3,6 +3,7 @@ package org.example.extensions;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.restassured.specification.RequestSpecification;
+import org.example.petstore.Pet;
 import org.example.petstore.User;
 import org.example.utils.PetStorePath;
 import org.junit.jupiter.api.extension.AfterEachCallback;
@@ -33,6 +34,13 @@ public class PetStoreExtension implements BeforeEachCallback, AfterEachCallback 
           .getInstance(RequestSpecification.class)
           .pathParam("username", username)
           .delete(PetStorePath.USER_BY_USERNAME);
+    }
+    Long id = injector.getInstance(Pet.class).getId();
+    if (id != null) {
+      injector
+          .getInstance(RequestSpecification.class)
+          .pathParam("petId", id)
+          .delete(PetStorePath.PET_BY_ID);
     }
   }
 }

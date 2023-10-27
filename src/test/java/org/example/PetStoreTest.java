@@ -33,6 +33,9 @@ public class PetStoreTest {
   private User user;
 
   @Inject
+  private Pet pet;
+
+  @Inject
   private RequestSpecification requestSpecification;
 
   @Inject
@@ -115,12 +118,24 @@ public class PetStoreTest {
   }
 
   /**
-   Тест проверяет, что при получении питомцев по заданному статусу
-   возвращаются только питомцы с этим статусом.
+   Тест создает питомца с заданным статусом
+   и проверяет, что при получении питомцев по заданному статусу:
+   1) в списке присутствует созданный питомец;
+   2) в списке присутствуют только питомцы с заданным статусом.
    */
   @ParameterizedTest
   @EnumSource(PetStatus.class)
   public void testGetPetByValidStatus(PetStatus status) {
+    Pet createdPet = given(requestSpecification)
+        .body(pet.setStatus(status))
+        .when()
+        .post(PetStorePath.POST_PET)
+        .then()
+        .spec(responseSpecification)
+        .statusCode(equalTo(HttpStatus.SC_OK))
+        .extract()
+        .as(Pet.class);
+    pet.setId(createdPet.getId());
     List<Pet> pets =
         given(requestSpecification)
             .when()
@@ -133,6 +148,8 @@ public class PetStoreTest {
             .as(new TypeRef<>(){});
     SoftAssertions.assertSoftly(softly ->
         softly.assertThat(pets)
+            .as("Среди полученных питомцев не содержится созданный")
+            .contains(createdPet)
             .as("Не все полученные питомцы удовлетворяют условиям")
             .allSatisfy(pet -> softly.assertThat(pet.getStatus()).isEqualTo(status)));
 
