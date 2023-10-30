@@ -13,41 +13,17 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <webdriver.manager.version>5.5.3</webdriver.manager.version>
-        <selenium.java.version>4.13.0</selenium.java.version>
         <junit.version>5.10.0</junit.version>
         <surefire.plugin.version>3.1.2</surefire.plugin.version>
-        <base.url>https://otus.ru</base.url>
+        <base.url>https://petstore.swagger.io/v2</base.url>
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <spotbugs-maven-plugin.version>4.7.2.1</spotbugs-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
         <commons-lang3.version>3.13.0</commons-lang3.version>
-        <cucumber.version>7.14.0</cucumber.version>
-        <browser>chrome</browser>
         <rest-assured.version>5.3.2</rest-assured.version>
     </properties>
 
     <profiles>
-        <profile>
-            <id>chrome</id>
-            <properties>
-                <browser>chrome</browser>
-                <suite>org.example.suite.HomeworkOneSuite</suite>
-            </properties>
-        </profile>
-        <profile>
-            <id>firefox</id>
-            <properties>
-                <browser>firefox</browser>
-                <suite>org.example.suite.HomeworkOneSuite</suite>
-            </properties>
-        </profile>
-        <profile>
-            <id>cucumber</id>
-            <properties>
-                <suite>org.example.suite.HomeworkTwoSuite</suite>
-            </properties>
-        </profile>
         <profile>
             <id>petstore</id>
             <properties>
@@ -57,16 +33,6 @@
     </profiles>
 
     <dependencies>
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>${webdriver.manager.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.java.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
@@ -87,11 +53,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-support</artifactId>
-            <version>${selenium.java.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
@@ -108,21 +69,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>${cucumber.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
-            <version>${cucumber.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-guice</artifactId>
-            <version>${cucumber.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
@@ -156,7 +102,6 @@
                     <test>${suite}</test>
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
-                        <browser>${browser}</browser>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
