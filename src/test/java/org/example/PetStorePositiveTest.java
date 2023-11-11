@@ -28,6 +28,7 @@ import org.junit.jupiter.params.provider.EnumSource;
  .
  */
 @ExtendWith(PetStoreExtension.class)
+@SuppressWarnings("unused")
 public class PetStorePositiveTest {
 
   @Inject

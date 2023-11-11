@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(PetStoreExtension.class)
+@SuppressWarnings("unused")
 public class PetStoreNegativeTest {
 
   @Inject

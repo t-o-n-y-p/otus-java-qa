@@ -11,6 +11,7 @@ import org.example.annotations.PetById;
 import org.example.annotations.PostPet;
 import org.example.petstore.Pet;
 
+@SuppressWarnings("unused")
 public class PetModule extends BaseModule {
 
   private final Pet pet = new Pet();

@@ -11,6 +11,7 @@ import org.example.annotations.PostUser;
 import org.example.annotations.UserByUsername;
 import org.example.petstore.User;
 
+@SuppressWarnings("unused")
 public class UserModule extends BaseModule {
 
   private final User user = new User();
