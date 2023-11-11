@@ -1,6 +1,7 @@
 package org.example.suite;
 
-import org.example.PetStoreTest;
+import org.example.PetStoreNegativeTest;
+import org.example.PetStorePositiveTest;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
@@ -8,6 +9,6 @@ import org.junit.platform.suite.api.Suite;
  .
  */
 @Suite
-@SelectClasses(PetStoreTest.class)
+@SelectClasses({PetStorePositiveTest.class, PetStoreNegativeTest.class})
 public class HomeworkThreeSuite {
 }
