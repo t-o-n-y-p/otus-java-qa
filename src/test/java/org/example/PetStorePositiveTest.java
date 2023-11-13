@@ -1,20 +1,16 @@
 package org.example;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
 import com.google.inject.Inject;
 import io.restassured.common.mapper.TypeRef;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import java.util.List;
 import org.assertj.core.api.SoftAssertions;
-import org.example.annotations.FindPetsByStatus;
-import org.example.annotations.PostPet;
-import org.example.annotations.PostUser;
-import org.example.annotations.UserByUsername;
+import org.example.clients.PetClient;
+import org.example.clients.UserClient;
 import org.example.extensions.PetStoreExtension;
 import org.example.petstore.Pet;
 import org.example.petstore.PetStatus;
@@ -38,36 +34,10 @@ public class PetStorePositiveTest {
   private Pet pet;
 
   @Inject
-  @PostUser
-  private RequestSpecification postUserRequestSpecification;
+  private UserClient userClient;
 
   @Inject
-  @PostUser
-  private ResponseSpecification postUserResponseSpecification;
-
-  @Inject
-  @UserByUsername
-  private RequestSpecification userByUsernameRequestSpecification;
-
-  @Inject
-  @UserByUsername
-  private ResponseSpecification userByUsernameResponseSpecification;
-
-  @Inject
-  @PostPet
-  private RequestSpecification postPetRequestSpecification;
-
-  @Inject
-  @PostPet
-  private ResponseSpecification postPetResponseSpecification;
-
-  @Inject
-  @FindPetsByStatus
-  private RequestSpecification findPetsByStatusRequestSpecification;
-
-  @Inject
-  @FindPetsByStatus
-  private ResponseSpecification findPetsByStatusResponseSpecification;
+  private PetClient petClient;
 
   /**
    Тест проверяет, что можно создать пользователя с полным телом запроса
@@ -76,19 +46,16 @@ public class PetStorePositiveTest {
   @Test
   public void testCreateFullUser() {
     String message =
-        given(postUserRequestSpecification)
-            .body(user
-                .setUsername("JSMITH" + System.currentTimeMillis())
-                .setFirstName("John")
-                .setLastName("Smith")
-                .setEmail("jsmith@example.com")
-                .setPassword("password")
-                .setPhone("phone")
-                .setUserStatus(0))
-            .when()
-            .post()
-            .then()
-            .spec(postUserResponseSpecification)
+        userClient
+            .postUser(
+                user
+                    .setUsername("JSMITH" + System.currentTimeMillis())
+                    .setFirstName("John")
+                    .setLastName("Smith")
+                    .setEmail("jsmith@example.com")
+                    .setPassword("password")
+                    .setPhone("phone")
+                    .setUserStatus(0))
             .body("code", equalTo(200))
             .body("message", not(equalTo("0")))
             .extract()
@@ -96,12 +63,8 @@ public class PetStorePositiveTest {
             .getString("message");
     user.setId(Long.parseLong(message));
     User actualUser =
-        given(userByUsernameRequestSpecification)
-            .when()
-            .pathParam("username", user.getUsername())
-            .get()
-            .then()
-            .spec(userByUsernameResponseSpecification)
+        userClient
+            .getUserByUsername(user.getUsername())
             .extract()
             .as(User.class);
     assertThat(actualUser)
@@ -119,31 +82,25 @@ public class PetStorePositiveTest {
   @EnumSource(PetStatus.class)
   public void testGetPetByValidStatus(PetStatus status) {
     Pet createdPet =
-        given(postPetRequestSpecification)
-            .body(pet.setStatus(status))
-            .when()
-            .post()
-            .then()
-            .spec(postPetResponseSpecification)
+        petClient
+            .postPet(pet.setStatus(status))
             .extract()
             .as(Pet.class);
     pet.setId(createdPet.getId());
-    List<Pet> pets =
-        given(findPetsByStatusRequestSpecification)
-            .when()
-            .queryParam("status", status.name().toLowerCase())
-            .get()
-            .then()
-            .spec(findPetsByStatusResponseSpecification)
-            .extract()
-            .as(new TypeRef<>(){});
-    SoftAssertions.assertSoftly(softly ->
-        softly.assertThat(pets)
-            .as("Среди полученных питомцев не содержится созданный")
-            .contains(createdPet)
-            .as("Не все полученные питомцы удовлетворяют условиям")
-            .allSatisfy(pet -> softly.assertThat(pet.getStatus()).isEqualTo(status)));
-
+    await()
+        .untilAsserted(() -> {
+          List<Pet> pets =
+              petClient
+                  .findPetsByStatus(status)
+                  .extract()
+                  .as(new TypeRef<>(){});
+          SoftAssertions.assertSoftly(softly ->
+              softly.assertThat(pets)
+                  .as("Среди полученных питомцев не содержится созданный")
+                  .contains(createdPet)
+                  .as("Не все полученные питомцы удовлетворяют условиям")
+                  .allSatisfy(pet -> softly.assertThat(pet.getStatus()).isEqualTo(status)));
+        });
   }
 
 

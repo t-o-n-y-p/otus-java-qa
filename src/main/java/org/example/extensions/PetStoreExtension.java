@@ -2,10 +2,8 @@ package org.example.extensions;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Key;
-import io.restassured.specification.RequestSpecification;
-import org.example.annotations.PetById;
-import org.example.annotations.UserByUsername;
+import org.example.clients.PetClient;
+import org.example.clients.UserClient;
 import org.example.extensions.modules.PetModule;
 import org.example.extensions.modules.UserModule;
 import org.example.petstore.Pet;
@@ -34,17 +32,11 @@ public class PetStoreExtension implements BeforeEachCallback, AfterEachCallback 
   public void afterEach(ExtensionContext extensionContext) throws Exception {
     String username = injector.getInstance(User.class).getUsername();
     if (username != null) {
-      injector
-          .getInstance(Key.get(RequestSpecification.class, UserByUsername.class))
-          .pathParam("username", username)
-          .delete();
+      injector.getInstance(UserClient.class).deleteUser(username);
     }
     Long id = injector.getInstance(Pet.class).getId();
     if (id != null) {
-      injector
-          .getInstance(Key.get(RequestSpecification.class, PetById.class))
-          .pathParam("petId", id)
-          .delete();
+      injector.getInstance(PetClient.class).deletePet(id);
     }
   }
 }

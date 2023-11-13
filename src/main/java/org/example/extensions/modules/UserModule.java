@@ -1,18 +1,13 @@
 package org.example.extensions.modules;
 
-import static org.hamcrest.Matchers.equalTo;
-
+import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import io.restassured.module.jsv.JsonSchemaValidator;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
-import org.apache.http.HttpStatus;
-import org.example.annotations.PostUser;
-import org.example.annotations.UserByUsername;
+import com.google.inject.Singleton;
+import org.example.clients.UserClient;
 import org.example.petstore.User;
 
 @SuppressWarnings("unused")
-public class UserModule extends BaseModule {
+public class UserModule extends AbstractModule {
 
   private final User user = new User();
 
@@ -22,33 +17,9 @@ public class UserModule extends BaseModule {
   }
 
   @Provides
-  @PostUser
-  public RequestSpecification getPostUserRequestSpecification() {
-    return getRequestSpecification()
-        .basePath("/user");
-  }
-
-  @Provides
-  @PostUser
-  public ResponseSpecification getPostUserResponseSpecification() {
-    return getResponseSpecification()
-        .statusCode(equalTo(HttpStatus.SC_OK))
-        .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/apiResponse.json"));
-  }
-
-  @Provides
-  @UserByUsername
-  public RequestSpecification getUserByUsernameRequestSpecification() {
-    return getRequestSpecification()
-        .basePath("/user/{username}");
-  }
-
-  @Provides
-  @UserByUsername
-  public ResponseSpecification getUserByUsernameResponseSpecification() {
-    return getResponseSpecification()
-        .statusCode(equalTo(HttpStatus.SC_OK))
-        .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema/getUser.json"));
+  @Singleton
+  public UserClient getUserClient() {
+    return new UserClient();
   }
 
 }
