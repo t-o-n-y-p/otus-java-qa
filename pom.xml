@@ -22,6 +22,7 @@
         <spotbugs-maven-plugin.version>4.7.2.1</spotbugs-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
         <commons-lang3.version>3.13.0</commons-lang3.version>
+        <webdriver.remote.server>http://localhost/wd/hub</webdriver.remote.server>
     </properties>
 
     <profiles>
@@ -111,6 +112,7 @@
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
                         <browser>${browser}</browser>
+                        <webdriver.remote.server>${webdriver.remote.server}</webdriver.remote.server>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

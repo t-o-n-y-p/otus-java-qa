@@ -1,7 +1,6 @@
 package org.example.factory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import java.net.URI;
 import java.time.Duration;
 import lombok.SneakyThrows;
 import org.example.exceptions.BrowserNotSupportedException;
@@ -29,10 +28,7 @@ public class WebDriverFactory {
       case "chrome" -> {
         WebDriverManager.chromedriver().setup();
         BrowserSettings browserSettings = new ChromeSettings();
-        WebDriver remoteDriver = new RemoteWebDriver(
-            URI.create("http://localhost/wd/hub").toURL(),
-            browserSettings.configureDriver()
-        );
+        WebDriver remoteDriver = new RemoteWebDriver(browserSettings.configureDriver());
         WebDriver driver = new EventFiringDecorator<>(new ActionsListener()).decorate(remoteDriver);
         driver.manage().window().maximize();
         return driver;
@@ -40,10 +36,7 @@ public class WebDriverFactory {
       case "firefox" -> {
         WebDriverManager.firefoxdriver().setup();
         BrowserSettings browserSettings = new FirefoxSettings();
-        WebDriver remoteDriver = new RemoteWebDriver(
-            URI.create("http://localhost/wd/hub").toURL(),
-            browserSettings.configureDriver()
-        );
+        WebDriver remoteDriver = new RemoteWebDriver(browserSettings.configureDriver());
         WebDriver driver = new EventFiringDecorator<>(new ActionsListener()).decorate(remoteDriver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
