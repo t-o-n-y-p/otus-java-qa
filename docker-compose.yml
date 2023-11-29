@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  selenoid:
+    container_name: selenoid
+    image: aerokube/selenoid:latest-release
+    ports:
+      - "4444:4444"
+    networks:
+      - selenoid
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./selenoid:/etc/selenoid:ro
+    command:
+      - "-container-network=selenoid"
+      - "-limit=12"
+
+  ggr:
+    container_name: ggr
+    depends_on:
+      - selenoid
+    image: aerokube/ggr:1.7.1
+    ports:
+      - "4446:4444"
+    networks:
+      - ggr
+    volumes:
+      - ./ggr:/etc/grid-router:ro
+    command:
+      - "-guests-allowed"
+      - "-guests-quota=selenoid"
+      - "-verbose"
+      - "-quotaDir=/etc/grid-router/quota"
+
+  ggr-ui:
+    container_name: ggr-ui
+    depends_on:
+      - ggr
+    image: aerokube/ggr-ui:1.1.2
+    ports:
+      - "8888:8888"
+    networks:
+      - ggr
+    volumes:
+      - ./ggr/quota:/etc/grid-router/quota:ro
+
+  selenoid-ui:
+    container_name: selenoid-ui
+    depends_on:
+      - ggr-ui
+    image: aerokube/selenoid-ui:1.8.0
+    ports:
+      - "8080:8080"
+    networks:
+      - selenoid
+    command:
+      - "--selenoid-uri"
+      - "http://172.30.0.17:8888"
+
+  nginx:
+    container_name: nginx
+    depends_on:
+      - selenoid-ui
+    image: nginx
+    network_mode: "host"
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d:ro
+
+networks:
+  selenoid:
+    name: selenoid
+    ipam:
+      config:
+        - subnet: 172.30.0.0/28
+          gateway: 172.30.0.1
+  ggr:
+    name: ggr
+    ipam:
+      config:
+        - subnet: 172.30.0.16/28
+          gateway: 172.30.0.17
