@@ -1,10 +1,16 @@
 package org.example.factory.impl;
 
+import org.openqa.selenium.remote.DesiredCapabilities;
+
 /**
  .
  */
-public interface BrowserSettings<T> {
+public interface BrowserSettings {
 
-  T configureDriver();
+  String SELENOID_OPTIONS = "selenoid:options";
+  String ENABLE_VNC = "enableVNC";
+  String ENABLE_VIDEO = "enableVideo";
+
+  DesiredCapabilities configureDriver();
 
 }

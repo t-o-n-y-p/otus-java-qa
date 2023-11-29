@@ -1,14 +1,19 @@
 package org.example.factory.impl;
 
-import org.openqa.selenium.firefox.FirefoxOptions;
+import java.util.Map;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
  .
  */
-public class FirefoxSettings implements BrowserSettings<FirefoxOptions> {
+public class FirefoxSettings implements BrowserSettings {
 
   @Override
-  public FirefoxOptions configureDriver() {
-    return new FirefoxOptions();
+  public DesiredCapabilities configureDriver() {
+    DesiredCapabilities capabilities = new DesiredCapabilities();
+    capabilities.setBrowserName("firefox");
+    capabilities.setVersion("118.0");
+    capabilities.setCapability(SELENOID_OPTIONS, Map.of(ENABLE_VNC, true, ENABLE_VIDEO, false));
+    return capabilities;
   }
 }

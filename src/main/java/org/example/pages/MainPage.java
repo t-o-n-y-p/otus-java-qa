@@ -1,6 +1,9 @@
 package org.example.pages;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.BinaryOperator;
 import org.example.annotations.Path;
 import org.example.components.CourseCard;
@@ -44,7 +47,7 @@ public class MainPage extends AbsBasePage<MainPage> {
    */
   public void selectProgramByEarliestStartDate() {
     selectProgramByReduce(
-        (card1, card2) -> card1.getStartDate().isBefore(card2.getStartDate()) ? card1 : card2);
+        (e1, e2) -> e1.getValue().isBefore(e2.getValue()) ? e1 : e2);
   }
 
   /**
@@ -52,15 +55,20 @@ public class MainPage extends AbsBasePage<MainPage> {
    */
   public void selectProgramByLatestStartDate() {
     selectProgramByReduce(
-        (card1, card2) -> card1.getStartDate().isAfter(card2.getStartDate()) ? card1 : card2);
+        (e1, e2) -> e1.getValue().isAfter(e2.getValue()) ? e1 : e2);
   }
 
-  private void selectProgramByReduce(BinaryOperator<CourseCard> reduce) {
+  private void selectProgramByReduce(BinaryOperator<Map.Entry<CourseCard, LocalDate>> reduce) {
     getProgramCards()
         .stream()
+        .map(card -> {
+          LocalDate startDate = card.getStartDate();
+          return startDate == null ? null : Map.entry(card, startDate);
+        })
+        .filter(Objects::nonNull)
         .reduce(reduce)
         .ifPresentOrElse(
-            CourseCard::click,
+            e -> e.getKey().click(),
             () -> {
               throw new ProgramCardNotFoundException();
             }

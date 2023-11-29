@@ -12,6 +12,8 @@ import org.openqa.selenium.WebElement;
  */
 public class CourseCard extends AbsComponent {
 
+  private static final String DATE_TBA = "О дате старта будет объявлено позже";
+
   public CourseCard(WebDriver driver, WebElement root) {
     super(driver, root);
   }
@@ -25,7 +27,11 @@ public class CourseCard extends AbsComponent {
    */
   public LocalDate getStartDate() {
     List<WebElement> spans = root.findElements(By.tagName("span"));
-    String[] parsedText = spans.get(spans.size() - 1).getText().split("\\s+");
+    String text = spans.get(spans.size() - 1).getText();
+    if (DATE_TBA.equals(text)) {
+      return null;
+    }
+    String[] parsedText = text.split("\\s+");
     if (parsedText.length == 5) {
       return LocalDate.parse(
           String.join(" ", parsedText[1], parsedText[2]),
