@@ -1,7 +1,6 @@
 package org.example.factory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import java.time.Duration;
 import lombok.SneakyThrows;
 import org.example.exceptions.BrowserNotSupportedException;
 import org.example.factory.impl.BrowserSettings;
@@ -39,7 +38,6 @@ public class WebDriverFactory {
         WebDriver remoteDriver = new RemoteWebDriver(browserSettings.configureDriver());
         WebDriver driver = new EventFiringDecorator<>(new ActionsListener()).decorate(remoteDriver);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return driver;
       }
       default -> throw new BrowserNotSupportedException(BROWSER_NAME);
