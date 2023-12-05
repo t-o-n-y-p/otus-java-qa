@@ -2,14 +2,14 @@
     <browser name="chrome" defaultVersion="119.0">
         <version number="119.0">
             <region name="1">
-                <host name="172.30.0.1" port="4444" count="1" vnc="vnc://172.30.0.1:5900"/>
+                <host name="selenoid" port="4444" count="1" vnc="vnc://selenoid:5900"/>
             </region>
         </version>
     </browser>
     <browser name="firefox" defaultVersion="118.0">
         <version number="118.0">
             <region name="1">
-                <host name="172.30.0.1" port="4444" count="1" vnc="vnc://172.30.0.1:5900"/>
+                <host name="selenoid" port="4444" count="1" vnc="vnc://selenoid:5900"/>
             </region>
         </version>
     </browser>
