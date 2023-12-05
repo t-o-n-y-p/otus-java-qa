@@ -1,0 +1,32 @@
+{
+  "request": {
+    "url": "/user/get/all",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": [
+      {
+        "name": "Test user",
+        "course": "QA",
+        "email": "admin@example.com",
+        "age": 23
+      },
+      {
+        "name": "User test",
+        "course": "Java",
+        "email": "jsmith@example.com",
+        "age": 90
+      },
+      {
+        "name": "Вася Иванов",
+        "course": "Android",
+        "email": "rubberband@example.com",
+        "age": 65
+      }
+    ]
+  }
+}

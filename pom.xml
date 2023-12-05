@@ -24,6 +24,7 @@
         <commons-lang3.version>3.13.0</commons-lang3.version>
         <cucumber.version>7.14.0</cucumber.version>
         <browser>chrome</browser>
+        <testcontainers.version>1.19.3</testcontainers.version>
     </properties>
 
     <profiles>
@@ -120,6 +121,16 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.24.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>${testcontainers.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
         </dependency>
 
 

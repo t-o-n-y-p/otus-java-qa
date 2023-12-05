@@ -1,0 +1,26 @@
+{
+  "request": {
+    "url": "/course/get/all",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": [
+      {
+        "name": "QA java",
+        "price": 15000
+      },
+      {
+        "name": "Java",
+        "price": 12000
+      },
+      {
+        "name": "Android",
+        "price": 80000
+      }
+    ]
+  }
+}
