@@ -23,29 +23,21 @@
         <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
         <commons-lang3.version>3.13.0</commons-lang3.version>
         <cucumber.version>7.14.0</cucumber.version>
-        <browser>chrome</browser>
         <testcontainers.version>1.19.3</testcontainers.version>
+        <rest-assured.version>5.3.2</rest-assured.version>
     </properties>
 
     <profiles>
         <profile>
-            <id>chrome</id>
+            <id>web-stub</id>
             <properties>
-                <browser>chrome</browser>
-                <suite>org.example.suite.HomeworkOneSuite</suite>
+                <suite>org.example.suite.WiremockWebStubSuiteSuite</suite>
             </properties>
         </profile>
         <profile>
-            <id>firefox</id>
+            <id>api-stub</id>
             <properties>
-                <browser>firefox</browser>
-                <suite>org.example.suite.HomeworkOneSuite</suite>
-            </properties>
-        </profile>
-        <profile>
-            <id>cucumber</id>
-            <properties>
-                <suite>org.example.suite.HomeworkTwoSuite</suite>
+                <suite>org.example.suite.WiremockApiStubSuite</suite>
             </properties>
         </profile>
     </profiles>
@@ -132,7 +124,21 @@
             <artifactId>junit-jupiter</artifactId>
             <version>${testcontainers.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.16.0</version>
+        </dependency>
 
     </dependencies>
 
@@ -144,10 +150,6 @@
                 <version>${surefire.plugin.version}</version>
                 <configuration>
                     <test>${suite}</test>
-                    <systemPropertyVariables>
-                        <base.url>${base.url}</base.url>
-                        <browser>${browser}</browser>
-                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>

@@ -14,5 +14,5 @@ import org.junit.platform.suite.api.Suite;
     key = Constants.GLUE_PROPERTY_NAME,
     value = "org.example"
 )
-public class HomeworkTwoSuite {
+public class WiremockWebStubSuiteSuite {
 }

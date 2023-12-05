@@ -2,7 +2,7 @@ package org.example.extensions;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.example.factory.GuiceModule;
+import org.example.factory.WiremockModule;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -11,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 /**
  .
  */
-public class GuiceExtension implements BeforeEachCallback, AfterEachCallback {
+public class GuiceExtension implements BeforeEachCallback {
 
   private Injector injector;
 
@@ -19,19 +19,8 @@ public class GuiceExtension implements BeforeEachCallback, AfterEachCallback {
   public void beforeEach(ExtensionContext extensionContext) throws Exception {
     extensionContext.getTestInstance()
         .ifPresent(instance -> {
-          injector = Guice.createInjector(new GuiceModule());
+          injector = Guice.createInjector(new WiremockModule());
           injector.injectMembers(instance);
-        });
-  }
-
-  @Override
-  public void afterEach(ExtensionContext extensionContext) throws Exception {
-    extensionContext.getTestInstance()
-        .ifPresent(instance -> {
-          WebDriver driver = injector.getProvider(WebDriver.class).get();
-          if (driver != null) {
-            driver.quit();
-          }
         });
   }
 
