@@ -1,8 +1,10 @@
 <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope/">
     <soap:Body>
         <soap:UserGetOneResponse>
-            <soap:Name>Test user</soap:Name>
-            <soap:Score>78</soap:Score>
+            <soap:Score>
+                <soap:Name>Test user</soap:Name>
+                <soap:Score>78</soap:Score>
+            </soap:Score>
         </soap:UserGetOneResponse>
     </soap:Body>
 </soap:Envelope>

@@ -10,8 +10,14 @@
                             <xs:element name="UserGetOneResponse">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="Name" type="xs:string"/>
-                                        <xs:element name="Score" type="xs:integer"/>
+                                        <xs:element name="Score">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="Name" type="xs:string"/>
+                                                    <xs:element name="Score" type="xs:integer"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>

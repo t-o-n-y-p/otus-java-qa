@@ -25,6 +25,7 @@
         <cucumber.version>7.14.0</cucumber.version>
         <testcontainers.version>1.19.3</testcontainers.version>
         <rest-assured.version>5.3.2</rest-assured.version>
+        <jakarta.xml.bind-api.version>4.0.0</jakarta.xml.bind-api.version>
     </properties>
 
     <profiles>
@@ -144,6 +145,16 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.16.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>${jakarta.xml.bind-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jakarta.xml.bind-api.version}</version>
         </dependency>
 
     </dependencies>
