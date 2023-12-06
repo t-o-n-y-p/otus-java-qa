@@ -5,16 +5,15 @@ import org.example.support.GuiceScoped;
 import org.openqa.selenium.WebDriver;
 
 /**
- .
+ * .
  */
 public abstract class AbsPageObject {
 
+  protected final WebDriver driver;
   protected GuiceScoped scoped;
 
-  protected final WebDriver driver;
-
   /**
-   .
+   * .
    */
   @Inject
   public AbsPageObject(GuiceScoped scoped) {

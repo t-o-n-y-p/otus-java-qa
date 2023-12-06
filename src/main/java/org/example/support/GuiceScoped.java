@@ -3,13 +3,12 @@ package org.example.support;
 import io.cucumber.guice.ScenarioScoped;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.extensions.WiremockExtension;
 import org.example.factory.WiremockModule;
 import org.openqa.selenium.WebDriver;
 import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 /**
- .
+ * .
  */
 @ScenarioScoped
 @Getter

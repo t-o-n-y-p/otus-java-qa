@@ -4,14 +4,13 @@ import com.google.inject.Inject;
 import io.cucumber.java.ru.Если;
 import io.cucumber.java.ru.Тогда;
 import io.restassured.common.mapper.TypeRef;
+import java.util.List;
 import org.example.clients.JsonUserMockClient;
 import org.example.models.UserData;
 import org.example.pages.AllUsersPage;
 
-import java.util.List;
-
 /**
- .
+ * .
  */
 public class AllUsersPageSteps {
 
@@ -29,7 +28,8 @@ public class AllUsersPageSteps {
   @Тогда("Список пользователей актуален")
   public void lessonShouldBeOpened() {
     List<UserData> expectedUserData =
-            jsonUserMockClient.getAllUsers().extract().as(new TypeRef<>(){});
+        jsonUserMockClient.getAllUsers().extract().as(new TypeRef<>() {
+        });
     allUsersPage.compareUserDataTo(expectedUserData);
   }
 

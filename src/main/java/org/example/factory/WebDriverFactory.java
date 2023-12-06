@@ -14,7 +14,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 /**
- .
+ * .
  */
 public class WebDriverFactory {
 
@@ -23,7 +23,7 @@ public class WebDriverFactory {
   }
 
   /**
-   .
+   * .
    */
   public WebDriver create(String browserName) {
     if (browserName.toLowerCase().contains("chrome")) {

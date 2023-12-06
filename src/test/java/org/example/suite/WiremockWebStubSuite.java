@@ -1,14 +1,12 @@
 package org.example.suite;
 
 import io.cucumber.junit.platform.engine.Constants;
-import org.example.extensions.WiremockExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.SelectClasspathResource;
 import org.junit.platform.suite.api.Suite;
 
 /**
- .
+ * .
  */
 @Suite
 @SelectClasspathResource("org/example")

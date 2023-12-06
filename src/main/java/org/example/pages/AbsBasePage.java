@@ -8,14 +8,12 @@ import org.example.annotations.Path;
 import org.example.annotations.Template;
 import org.example.annotations.UrlTemplate;
 import org.example.exceptions.PathNotFoundException;
-import org.example.extensions.WiremockExtension;
 import org.example.factory.WiremockModule;
 import org.example.pageobject.AbsPageObject;
 import org.example.support.GuiceScoped;
-import org.openqa.selenium.WebDriver;
 
 /**
- .
+ * .
  */
 public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObject {
 
@@ -49,18 +47,18 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
   @SuppressWarnings("unchecked")
   public T open(String name, String... params) {
     driver.get(
-            StringUtils.appendIfMissing(WiremockModule.getWiremockContainer().getBaseUrl(), "/")
-                    + getPath(name, params));
+        StringUtils.appendIfMissing(WiremockModule.getWiremockContainer().getBaseUrl(), "/")
+            + getPath(name, params));
     return (T) this;
   }
 
   /**
-   .
+   * .
    */
   @SuppressWarnings("unchecked")
   public T open() {
     String url = StringUtils.appendIfMissing(WiremockModule.getWiremockContainer().getBaseUrl(), "/")
-            + getPath();
+        + getPath();
     driver.get(url);
     return (T) this;
   }

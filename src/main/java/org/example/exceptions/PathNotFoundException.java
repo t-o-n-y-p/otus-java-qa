@@ -1,7 +1,7 @@
 package org.example.exceptions;
 
 /**
- .
+ * .
  */
 public class PathNotFoundException extends RuntimeException {
 

@@ -6,7 +6,7 @@ import org.example.factory.WebDriverFactory;
 import org.example.support.GuiceScoped;
 
 /**
- .
+ * .
  */
 public class CommonSteps {
 

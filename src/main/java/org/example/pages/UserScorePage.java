@@ -7,20 +7,20 @@ import org.example.support.GuiceScoped;
 import org.openqa.selenium.By;
 
 @UrlTemplate(
-        @Template(name = "score", template = "user/get/%d")
+    @Template(name = "score", template = "user/get/%d")
 )
 public class UserScorePage extends AbsBasePage<UserScorePage> {
 
-    @Inject
-    public UserScorePage(GuiceScoped scoped) {
-        super(scoped);
-    }
+  @Inject
+  public UserScorePage(GuiceScoped scoped) {
+    super(scoped);
+  }
 
-    public String getName() {
-        return driver.findElement(By.tagName("h3")).getText();
-    }
+  public String getName() {
+    return driver.findElement(By.tagName("h3")).getText();
+  }
 
-    public int getScore() {
-        return Integer.parseInt(driver.findElement(By.tagName("h4")).getText());
-    }
+  public int getScore() {
+    return Integer.parseInt(driver.findElement(By.tagName("h4")).getText());
+  }
 }
