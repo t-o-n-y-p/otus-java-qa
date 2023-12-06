@@ -1,0 +1,18 @@
+{
+  "request": {
+    "url": "/soap",
+    "method": "POST",
+    "headers": {
+      "SOAPAction": {
+        "contains": "/UserGetAll"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "users.xml",
+    "headers": {
+      "Content-Type": "application/xml;charset=UTF-8"
+    }
+  }
+}

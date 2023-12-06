@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.w3.org/2003/05/soap-envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="Envelope">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Body">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="UserGetOneResponse">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Name" type="xs:string" />
+                                        <xs:element name="Score" type="xs:integer" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

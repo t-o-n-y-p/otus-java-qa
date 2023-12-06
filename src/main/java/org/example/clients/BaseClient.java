@@ -15,6 +15,8 @@ import org.example.support.GuiceScoped;
 
 public abstract class BaseClient {
 
+  public static final String SOAP_ACTION = "SOAPAction";
+
   private final WireMockContainer wireMockContainer;
 
   @Inject

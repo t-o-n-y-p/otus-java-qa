@@ -1,0 +1,18 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope/">
+    <soap:Body>
+        <soap:CourseGetAllResponse>
+            <soap:Course>
+                <soap:Name>QA java</soap:Name>
+                <soap:Price>15000</soap:Price>
+            </soap:Course>
+            <soap:Course>
+                <soap:Name>Java</soap:Name>
+                <soap:Price>12000</soap:Price>
+            </soap:Course>
+            <soap:Course>
+                <soap:Name>Android</soap:Name>
+                <soap:Price>80000</soap:Price>
+            </soap:Course>
+        </soap:CourseGetAllResponse>
+    </soap:Body>
+</soap:Envelope>

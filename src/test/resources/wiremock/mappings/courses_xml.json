@@ -1,0 +1,18 @@
+{
+  "request": {
+    "url": "/soap",
+    "method": "POST",
+    "headers": {
+      "SOAPAction": {
+        "contains": "/CourseGetAll"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "courses.xml",
+    "headers": {
+      "Content-Type": "application/xml;charset=UTF-8"
+    }
+  }
+}
