@@ -8,6 +8,8 @@ import org.example.annotations.Path;
 import org.example.annotations.Template;
 import org.example.annotations.UrlTemplate;
 import org.example.exceptions.PathNotFoundException;
+import org.example.extensions.WiremockExtension;
+import org.example.factory.WiremockModule;
 import org.example.pageobject.AbsPageObject;
 import org.example.support.GuiceScoped;
 import org.openqa.selenium.WebDriver;
@@ -16,12 +18,6 @@ import org.openqa.selenium.WebDriver;
  .
  */
 public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObject {
-
-  public static final String BASE_URL = System.getProperty("base.url");
-
-  public AbsBasePage(WebDriver driver) {
-    super(driver);
-  }
 
   @Inject
   public AbsBasePage(GuiceScoped scoped) {
@@ -52,7 +48,9 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
 
   @SuppressWarnings("unchecked")
   public T open(String name, String... params) {
-    driver.get(StringUtils.appendIfMissing(BASE_URL, "/") + getPath(name, params));
+    driver.get(
+            StringUtils.appendIfMissing(WiremockModule.getWiremockContainer().getBaseUrl(), "/")
+                    + getPath(name, params));
     return (T) this;
   }
 
@@ -61,7 +59,8 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
    */
   @SuppressWarnings("unchecked")
   public T open() {
-    String url = StringUtils.appendIfMissing(BASE_URL, "/") + getPath();
+    String url = StringUtils.appendIfMissing(WiremockModule.getWiremockContainer().getBaseUrl(), "/")
+            + getPath();
     driver.get(url);
     return (T) this;
   }

@@ -10,8 +10,8 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.http.HttpStatus;
-import org.example.containers.WireMockContainer;
 import org.example.support.GuiceScoped;
+import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 public abstract class BaseClient {
 
@@ -19,9 +19,13 @@ public abstract class BaseClient {
 
   private final WireMockContainer wireMockContainer;
 
-  @Inject
   public BaseClient(WireMockContainer wireMockContainer) {
     this.wireMockContainer = wireMockContainer;
+  }
+
+  @Inject
+  public BaseClient(GuiceScoped scoped) {
+    wireMockContainer = scoped.getContainer();
   }
 
   protected abstract String getBasePath();

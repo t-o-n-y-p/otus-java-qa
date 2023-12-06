@@ -1,11 +1,12 @@
 package org.example.extensions;
 
 import com.google.inject.Guice;
-import org.example.containers.WireMockContainer;
+import io.cucumber.guice.ScenarioScoped;
 import org.example.factory.WiremockModule;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;

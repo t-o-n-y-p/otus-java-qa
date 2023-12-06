@@ -4,20 +4,25 @@ import com.google.inject.Inject;
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.ValidatableResponse;
-import org.example.containers.WireMockContainer;
+import org.example.support.GuiceScoped;
+import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 import static io.restassured.RestAssured.given;
 
 public class JsonUserMockClient extends BaseClient {
 
-    @Inject
     public JsonUserMockClient(WireMockContainer wireMockContainer) {
         super(wireMockContainer);
     }
 
+    @Inject
+    public JsonUserMockClient(GuiceScoped scoped) {
+        super(scoped);
+    }
+
     @Override
     protected String getBasePath() {
-        return "/user";
+        return "/api/user";
     }
 
     @Override

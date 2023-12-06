@@ -1,6 +1,6 @@
 {
   "request": {
-    "url": "/course/get/all",
+    "url": "/api/course/get/all",
     "method": "GET"
   },
   "response": {

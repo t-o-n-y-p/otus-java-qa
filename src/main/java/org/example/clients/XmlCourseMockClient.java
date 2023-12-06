@@ -3,7 +3,8 @@ package org.example.clients;
 import com.google.inject.Inject;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
-import org.example.containers.WireMockContainer;
+import org.example.support.GuiceScoped;
+import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 import java.util.Map;
 
@@ -12,9 +13,13 @@ import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
 
 public class XmlCourseMockClient extends BaseClient {
 
-    @Inject
     public XmlCourseMockClient(WireMockContainer wireMockContainer) {
         super(wireMockContainer);
+    }
+
+    @Inject
+    public XmlCourseMockClient(GuiceScoped scoped) {
+        super(scoped);
     }
 
     @Override

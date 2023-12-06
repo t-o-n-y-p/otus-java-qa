@@ -12,24 +12,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public abstract class AbsComponent extends AbsPageObject {
 
-  protected final String xpath;
+  protected final WebElement root;
 
-  public AbsComponent(WebDriver driver, String xpath) {
-    super(driver);
-    this.xpath = xpath;
-  }
-
-  public AbsComponent(GuiceScoped scoped, String xpath) {
+  public AbsComponent(GuiceScoped scoped, WebElement root) {
     super(scoped);
-    this.xpath = xpath;
+    this.root = root;
   }
 
-  protected WebElement getRoot() {
-    return driver.findElement(By.xpath(xpath));
-  }
-
-  public void click() {
-    waiter.waitForCondition(ExpectedConditions.stalenessOf(getRoot()));
-    actions.click(getRoot());
-  }
 }
