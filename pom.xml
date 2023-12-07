@@ -27,7 +27,7 @@
         <rest-assured.version>5.3.2</rest-assured.version>
         <jaxb-api.version>2.3.0</jaxb-api.version>
         <jackson-databind.version>2.16.0</jackson-databind.version>
-        <webdriver.remote.server>${webdriver.remote.server}</webdriver.remote.server>
+        <webdriver.remote.server>http://localhost/wd/hub</webdriver.remote.server>
     </properties>
 
     <profiles>
