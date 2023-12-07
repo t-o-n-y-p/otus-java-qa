@@ -27,6 +27,7 @@
         <rest-assured.version>5.3.2</rest-assured.version>
         <jaxb-api.version>2.3.0</jaxb-api.version>
         <jackson-databind.version>2.16.0</jackson-databind.version>
+        <webdriver.remote.server>${webdriver.remote.server}</webdriver.remote.server>
     </properties>
 
     <profiles>
@@ -163,6 +164,9 @@
                 <version>${surefire.plugin.version}</version>
                 <configuration>
                     <test>${suite}</test>
+                    <systemPropertyVariables>
+                        <webdriver.remote.server>${webdriver.remote.server}</webdriver.remote.server>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>

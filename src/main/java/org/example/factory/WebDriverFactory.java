@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
  * .
@@ -28,14 +29,14 @@ public class WebDriverFactory {
   public WebDriver create(String browserName) {
     if (browserName.toLowerCase().contains("chrome")) {
       WebDriverManager.chromedriver().setup();
-      BrowserSettings<ChromeOptions> browserSettings = new ChromeSettings();
-      WebDriver driver = new ChromeDriver(browserSettings.configureDriver());
+      BrowserSettings browserSettings = new ChromeSettings();
+      WebDriver driver = new RemoteWebDriver(browserSettings.configureDriver());
       driver.manage().window().maximize();
       return driver;
     } else if (browserName.toLowerCase().contains("firefox")) {
       WebDriverManager.firefoxdriver().setup();
-      BrowserSettings<FirefoxOptions> browserSettings = new FirefoxSettings();
-      WebDriver driver = new FirefoxDriver(browserSettings.configureDriver());
+      BrowserSettings browserSettings = new FirefoxSettings();
+      WebDriver driver = new RemoteWebDriver(browserSettings.configureDriver());
       driver.manage().window().maximize();
       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
       return driver;
