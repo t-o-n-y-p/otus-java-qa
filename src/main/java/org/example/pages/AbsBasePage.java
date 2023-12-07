@@ -8,7 +8,6 @@ import org.example.annotations.Path;
 import org.example.annotations.Template;
 import org.example.annotations.UrlTemplate;
 import org.example.exceptions.PathNotFoundException;
-import org.example.factory.WiremockModule;
 import org.example.pageobject.AbsPageObject;
 import org.example.support.GuiceScoped;
 

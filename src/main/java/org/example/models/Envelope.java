@@ -8,7 +8,7 @@ import lombok.Data;
 @JacksonXmlRootElement(namespace = "soap", localName = "Envelope")
 public class Envelope {
 
-    @JacksonXmlProperty(namespace = "soap", localName = "Body")
-    private Body body;
+  @JacksonXmlProperty(namespace = "soap", localName = "Body")
+  private Body body;
 
 }

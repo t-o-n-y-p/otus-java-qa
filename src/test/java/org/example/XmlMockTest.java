@@ -1,13 +1,11 @@
 package org.example;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
 import com.google.inject.Inject;
 import org.example.clients.XmlCourseMockClient;
 import org.example.clients.XmlUserMockClient;
 import org.example.extensions.WiremockExtension;
-import org.example.models.UserGetAllResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

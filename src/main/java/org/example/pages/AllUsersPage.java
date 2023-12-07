@@ -1,8 +1,6 @@
 package org.example.pages;
 
 import com.google.inject.Inject;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import org.assertj.core.api.SoftAssertions;

@@ -8,7 +8,7 @@ import lombok.Data;
 @JacksonXmlRootElement(namespace = "soap", localName = "UserGetOneResponse")
 public class UserGetOneResponse {
 
-    @JacksonXmlProperty(namespace = "soap", localName = "UserScore")
-    private UserScore userScore;
+  @JacksonXmlProperty(namespace = "soap", localName = "UserScore")
+  private UserScore userScore;
 
 }

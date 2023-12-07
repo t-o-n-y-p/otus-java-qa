@@ -29,11 +29,11 @@ public class UserScorePage extends AbsBasePage<UserScorePage> {
   public void compareUserScoreTo(UserScore userScore) {
     SoftAssertions.assertSoftly(softly -> {
       softly.assertThat(getName())
-              .as("User name is incorrect")
-              .isEqualTo(userScore.getName());
+          .as("User name is incorrect")
+          .isEqualTo(userScore.getName());
       softly.assertThat(getScore())
-              .as("User score is incorrect")
-              .isEqualTo(userScore.getScore());
+          .as("User score is incorrect")
+          .isEqualTo(userScore.getScore());
     });
   }
 }

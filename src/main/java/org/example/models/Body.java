@@ -8,11 +8,11 @@ import lombok.Data;
 @JacksonXmlRootElement(namespace = "soap", localName = "Body")
 public class Body {
 
-    @JacksonXmlProperty(namespace = "soap", localName = "UserGetAllResponse")
-    private UserGetAllResponse userGetAllResponse;
-    @JacksonXmlProperty(namespace = "soap", localName = "UserGetOneResponse")
-    private UserGetOneResponse userGetOneResponse;
-    @JacksonXmlProperty(namespace = "soap", localName = "CourseGetAllResponse")
-    private CourseGetAllResponse courseGetAllResponse;
+  @JacksonXmlProperty(namespace = "soap", localName = "UserGetAllResponse")
+  private UserGetAllResponse userGetAllResponse;
+  @JacksonXmlProperty(namespace = "soap", localName = "UserGetOneResponse")
+  private UserGetOneResponse userGetOneResponse;
+  @JacksonXmlProperty(namespace = "soap", localName = "CourseGetAllResponse")
+  private CourseGetAllResponse courseGetAllResponse;
 
 }

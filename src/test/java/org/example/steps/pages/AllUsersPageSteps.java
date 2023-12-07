@@ -5,14 +5,12 @@ import com.google.inject.Inject;
 import io.cucumber.java.ru.Если;
 import io.cucumber.java.ru.Тогда;
 import io.restassured.common.mapper.TypeRef;
-import java.util.List;
-
 import io.restassured.internal.mapping.Jackson2Mapper;
+import java.util.List;
 import org.example.clients.JsonUserMockClient;
 import org.example.clients.XmlUserMockClient;
 import org.example.models.Envelope;
 import org.example.models.UserData;
-import org.example.models.UserGetAllResponse;
 import org.example.pages.AllUsersPage;
 
 /**
@@ -45,11 +43,11 @@ public class AllUsersPageSteps {
   @Тогда("Список пользователей актуален XML")
   public void checkUsersXml() {
     List<UserData> expectedUserData =
-            xmlUserMockClient.getAllUsers().extract()
-                    .as(Envelope.class, new Jackson2Mapper((t, s) -> new XmlMapper()))
-                    .getBody()
-                    .getUserGetAllResponse()
-                    .getUserData();
+        xmlUserMockClient.getAllUsers().extract()
+            .as(Envelope.class, new Jackson2Mapper((t, s) -> new XmlMapper()))
+            .getBody()
+            .getUserGetAllResponse()
+            .getUserData();
     allUsersPage.compareUserDataTo(expectedUserData);
   }
 
