@@ -61,6 +61,16 @@ services:
     volumes:
       - ./nginx/:/etc/nginx/conf.d:ro
 
+  wiremock:
+    container_name: wiremock
+    image: wiremock/wiremock:2.35.0
+    networks:
+      - selenoid
+    ports:
+      - "50000:8080"
+    volumes:
+      - ./src/test/resources/wiremock:/home/wiremock:ro
+
 networks:
   selenoid:
     name: selenoid

@@ -19,6 +19,4 @@ public class GuiceScoped {
 
   private String browserName;
 
-  private WireMockContainer container = WiremockModule.getWiremockContainer();
-
 }

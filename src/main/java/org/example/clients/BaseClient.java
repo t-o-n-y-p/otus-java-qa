@@ -17,15 +17,15 @@ public abstract class BaseClient {
 
   public static final String SOAP_ACTION = "SOAPAction";
 
-  private final WireMockContainer wireMockContainer;
+  private final String baseUrl;
 
   public BaseClient(WireMockContainer wireMockContainer) {
-    this.wireMockContainer = wireMockContainer;
+    baseUrl = wireMockContainer.getBaseUrl();
   }
 
   @Inject
   public BaseClient(GuiceScoped scoped) {
-    wireMockContainer = scoped.getContainer();
+    baseUrl = "http://localhost:50000";
   }
 
   protected abstract String getBasePath();
@@ -34,7 +34,7 @@ public abstract class BaseClient {
 
   protected RequestSpecification getDefaultRequestSpecification() {
     return given()
-        .baseUri(wireMockContainer.getBaseUrl())
+        .baseUri(baseUrl)
         .basePath(getBasePath())
         .contentType(getContentType())
         .accept(getContentType())

@@ -16,19 +16,6 @@ public class Hooks {
   @Inject
   private GuiceScoped scoped;
 
-  @BeforeAll
-  public static void before_all() {
-    WiremockModule.getWiremockContainer().start();
-  }
-
-  @AfterAll
-  public static void after_all() {
-    WireMockContainer container = WiremockModule.getWiremockContainer();
-    if (container.isRunning()) {
-      container.stop();
-    }
-  }
-
   /**
    * .
    */
