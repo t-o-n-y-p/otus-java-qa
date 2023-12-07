@@ -10,11 +10,17 @@
                             <xs:element name="CourseGetAllResponse">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element maxOccurs="unbounded" name="Course">
+                                        <xs:element name="Courses">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element name="Name" type="xs:string"/>
-                                                    <xs:element name="Price" type="xs:integer"/>
+                                                    <xs:element maxOccurs="unbounded" name="Course">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="Name" type="xs:string"/>
+                                                                <xs:element name="Price" type="xs:integer"/>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>

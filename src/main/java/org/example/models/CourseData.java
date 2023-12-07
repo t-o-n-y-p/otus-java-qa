@@ -1,16 +1,16 @@
 package org.example.models;
 
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.Data;
 
 @Data
-@XmlRootElement(namespace = "soap", name = "Course")
+@JacksonXmlRootElement(namespace = "soap", localName = "Course")
 public class CourseData {
 
-  @XmlElement(namespace = "soap", name = "Name")
+  @JacksonXmlProperty(namespace = "soap", localName = "Name")
   private String name;
-  @XmlElement(namespace = "soap", name = "Price")
+  @JacksonXmlProperty(namespace = "soap", localName = "Price")
   private Integer price;
 
 }

@@ -1,11 +1,13 @@
 package org.example;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
 import com.google.inject.Inject;
 import org.example.clients.XmlCourseMockClient;
 import org.example.clients.XmlUserMockClient;
 import org.example.extensions.WiremockExtension;
+import org.example.models.UserGetAllResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +26,7 @@ public class XmlMockTest {
   void testAllUsers() {
     xmlUserMockClient
         .getAllUsers()
-        .body("Envelope.Body.UserGetAllResponse.children().size()", greaterThan(0));
+        .body("Envelope.Body.UserGetAllResponse.Users.children().size()", greaterThan(0));
   }
 
   @ParameterizedTest
@@ -37,6 +39,6 @@ public class XmlMockTest {
   void testAllCourses() {
     xmlCourseMockClient
         .getAllCourses()
-        .body("Envelope.Body.CourseGetAllResponse.children().size()", greaterThan(0));
+        .body("Envelope.Body.CourseGetAllResponse.Courses.children().size()", greaterThan(0));
   }
 }

@@ -1,24 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope/">
     <soap:Body>
         <soap:UserGetAllResponse>
-            <soap:User>
-                <soap:Name>Test user</soap:Name>
-                <soap:Course>QA</soap:Course>
-                <soap:Email>admin@example.com</soap:Email>
-                <soap:Age>23</soap:Age>
-            </soap:User>
-            <soap:User>
-                <soap:Name>User test</soap:Name>
-                <soap:Course>Java</soap:Course>
-                <soap:Email>jsmith@example.com</soap:Email>
-                <soap:Age>90</soap:Age>
-            </soap:User>
-            <soap:User>
-                <soap:Name>Вася Иванов</soap:Name>
-                <soap:Course>Android</soap:Course>
-                <soap:Email>rubberband@example.com</soap:Email>
-                <soap:Age>65</soap:Age>
-            </soap:User>
+            <soap:Users>
+                <soap:User>
+                    <soap:Name>Test user</soap:Name>
+                    <soap:Course>QA</soap:Course>
+                    <soap:Email>admin@example.com</soap:Email>
+                    <soap:Age>23</soap:Age>
+                </soap:User>
+                <soap:User>
+                    <soap:Name>User test</soap:Name>
+                    <soap:Course>Java</soap:Course>
+                    <soap:Email>jsmith@example.com</soap:Email>
+                    <soap:Age>90</soap:Age>
+                </soap:User>
+                <soap:User>
+                    <soap:Name>Вася Иванов</soap:Name>
+                    <soap:Course>Android</soap:Course>
+                    <soap:Email>rubberband@example.com</soap:Email>
+                    <soap:Age>65</soap:Age>
+                </soap:User>
+            </soap:Users>
         </soap:UserGetAllResponse>
     </soap:Body>
 </soap:Envelope>
