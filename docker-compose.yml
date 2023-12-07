@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  selenoid:
+    container_name: selenoid
+    image: aerokube/selenoid:latest-release
+    networks:
+      - selenoid
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./selenoid:/etc/selenoid:ro
+    command:
+      - "-container-network=selenoid"
+      - "-limit=12"
+
+  ggr:
+    container_name: ggr
+    depends_on:
+      - selenoid
+    image: aerokube/ggr:1.7.1
+    networks:
+      - selenoid
+    volumes:
+      - ./ggr:/etc/grid-router:ro
+    command:
+      - "-guests-allowed"
+      - "-guests-quota=selenoid"
+      - "-verbose"
+      - "-quotaDir=/etc/grid-router/quota"
+
+  ggr-ui:
+    container_name: ggr-ui
+    depends_on:
+      - ggr
+    image: aerokube/ggr-ui:1.1.2
+    networks:
+      - selenoid
+    volumes:
+      - ./ggr/quota:/etc/grid-router/quota:ro
+
+  selenoid-ui:
+    container_name: selenoid-ui
+    depends_on:
+      - ggr-ui
+    image: aerokube/selenoid-ui:1.8.0
+    networks:
+      - selenoid
+    command:
+      - "--selenoid-uri"
+      - "http://ggr-ui:8888"
+
+  nginx:
+    container_name: nginx
+    depends_on:
+      - selenoid-ui
+    image: nginx
+    networks:
+      - selenoid
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d:ro
+
+networks:
+  selenoid:
+    name: selenoid
