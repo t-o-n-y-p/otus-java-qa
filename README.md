@@ -1,13 +1,11 @@
 Предусловия:
 
 - иметь Java 17+
-- иметь браузеры Chrome и Firefox версий, бьющихся с версиями драйверов
+- иметь не-Windows с установленным Docker
 
-Варианты запуска ДЗ 1 в зависимости от желаемого браузера:
+Варианты запуска ДЗ:
 
-- mvn test -P chrome
-- mvn test -P firefox
+- mvn test -P api-stub
+- mvn test -P web-stub
 
-Запуск ДЗ 2:
-
-- mvn test -P cucumber
+Перед запуском тестов на web стабы запустить docker-compose.yml
