@@ -32,12 +32,6 @@
                       value="Consider using special escape sequence instead of octal value or Unicode escaped value."/>
         </module>
 
-        <module name="AvoidEscapedUnicodeCharacters">
-            <property name="allowEscapesForControlCharacters" value="true"/>
-            <property name="allowByTailComment" value="true"/>
-            <property name="allowNonPrintableEscapes" value="true"/>
-        </module>
-
         <module name="OneTopLevelClass"/>
         <module name="NoLineWrap"/>
         <module name="ConstantName"/>
@@ -179,7 +173,7 @@
                      value="Method name ''{0}'' must match pattern ''{1}''."/>
         </module>
         <module name="EmptyCatchBlock">
-            <property name="exceptionVariableName" value="expected"/>
+            <property name="exceptionVariableName" value="ignored"/>
         </module>
         <module name="CommentsIndentation"/>
     </module>

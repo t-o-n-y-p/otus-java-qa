@@ -1,24 +1,21 @@
 package org.example.components;
 
+import static com.codeborne.selenide.appium.SelenideAppium.$x;
+
+import com.codeborne.selenide.WebElementCondition;
+import lombok.RequiredArgsConstructor;
 import org.example.pageobject.AbsPageObject;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
- .
+ * .
  */
+@RequiredArgsConstructor
 public abstract class AbsComponent extends AbsPageObject {
 
-  protected final WebElement root;
+  protected final String xpath;
 
-  public AbsComponent(WebDriver driver, WebElement root) {
-    super(driver);
-    this.root = root;
+  public boolean is(WebElementCondition condition) {
+    return $x(xpath).is(condition);
   }
 
-  public void click() {
-    waiter.waitForCondition(ExpectedConditions.stalenessOf(root));
-    actions.click(root);
-  }
 }
