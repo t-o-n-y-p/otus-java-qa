@@ -1,0 +1,22 @@
+- job-template:
+    name: 'ui-tests'
+    project-type: pipeline
+    concurrent: true
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 10
+    parameters:
+      - string:
+          name: BRANCH
+          default: master
+          description: "Branch with tests"
+      - text:
+          name: YAML_CONFIG
+          default: |
+            BROWSER_NAME: chrome
+          description: |
+            BROWSER_NAME: chrome | firefox
+    pipeline-scm:
+      scm:
+        - otus-java-qa
+      script-path: pipeline.groovy

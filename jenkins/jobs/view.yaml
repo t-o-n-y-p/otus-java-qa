@@ -1,0 +1,17 @@
+---
+
+- view:
+    name: "Otus Java QA"
+    view-type: list
+    description: "Otus Java QA"
+    filter-executors: true
+    filter-queue: true
+    job-name:
+      - 'ui-tests'
+      - 'api-tests'
+      - 'wiremock-tests'
+      - 'android-tests'
+    columns:
+      - status
+      - job
+      - build-button

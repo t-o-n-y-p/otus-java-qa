@@ -1,0 +1,16 @@
+- job-template:
+    name: 'api-tests'
+    project-type: pipeline
+    concurrent: true
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 10
+    parameters:
+      - string:
+          name: BRANCH
+          default: rest_assured
+          description: "Branch with tests"
+    pipeline-scm:
+      scm:
+        - otus-java-qa
+      script-path: pipeline.groovy

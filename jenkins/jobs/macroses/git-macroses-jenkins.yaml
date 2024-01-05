@@ -1,0 +1,10 @@
+---
+
+- scm:
+    name: otus-java-qa
+    scm:
+      - git:
+          url: git@github.com:t-o-n-y-p/otus-java-qa.git
+          branches:
+            - FETCH_HEAD
+          refspec: ${BRANCH}

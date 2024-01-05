@@ -1,0 +1,10 @@
+---
+
+- project:
+    name: "Otus Java QA"
+    job-description: "Otus Java QA"
+    jobs:
+      - 'ui-tests'
+      - 'api-tests'
+      - 'wiremock-tests'
+      - 'android-tests'
