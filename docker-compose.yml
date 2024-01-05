@@ -5,7 +5,7 @@ services:
     container_name: selenoid
     image: aerokube/selenoid:latest-release
     networks:
-      - selenoid
+      - qa
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./selenoid:/etc/selenoid:ro
@@ -19,7 +19,7 @@ services:
       - selenoid
     image: aerokube/ggr:1.7.1
     networks:
-      - selenoid
+      - qa
     volumes:
       - ./ggr:/etc/grid-router:ro
     command:
@@ -34,7 +34,7 @@ services:
       - ggr
     image: aerokube/ggr-ui:1.1.2
     networks:
-      - selenoid
+      - qa
     volumes:
       - ./ggr/quota:/etc/grid-router/quota:ro
 
@@ -44,7 +44,7 @@ services:
       - ggr-ui
     image: aerokube/selenoid-ui:1.8.0
     networks:
-      - selenoid
+      - qa
     command:
       - "--selenoid-uri"
       - "http://ggr-ui:8888"
@@ -53,9 +53,10 @@ services:
     container_name: nginx
     depends_on:
       - selenoid-ui
+      - jenkins
     image: nginx
     networks:
-      - selenoid
+      - qa
     ports:
       - "80:80"
     volumes:
@@ -65,12 +66,39 @@ services:
     container_name: wiremock
     image: wiremock/wiremock:2.35.0
     networks:
-      - selenoid
+      - qa
     ports:
       - "50000:8080"
     volumes:
-      - ./src/test/resources/wiremock:/home/wiremock:ro
+      - ./wiremock:/home/wiremock:ro
+
+  jenkins:
+    container_name: jenkins
+    user: root
+    image: jenkins/jenkins
+    networks:
+      - qa
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/jenkins_home:/var/jenkins_home
+    environment:
+      - JAVA_OPTS="-Dhudson.model.DownloadService.noSignatureCheck=true"
+      - DOCKER_HOST=unix:///var/run/docker.sock
+
+  registry:
+    container_name: registry
+    depends_on:
+      - nginx
+    image: registry
+    networks:
+      - qa
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./registry:/var/lib/registry
+    environment:
+      - REGISTRY_HTTP_ADDR=0.0.0.0:5005
 
 networks:
-  selenoid:
-    name: selenoid
+  qa:
+    name: qa
