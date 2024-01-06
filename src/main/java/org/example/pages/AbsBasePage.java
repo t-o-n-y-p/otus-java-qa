@@ -2,6 +2,8 @@ package org.example.pages;
 
 import java.util.Arrays;
 import java.util.Optional;
+
+import io.qameta.allure.Allure;
 import org.apache.commons.lang3.StringUtils;
 import org.example.annotations.Path;
 import org.example.annotations.Template;
@@ -45,7 +47,9 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
 
   @SuppressWarnings("unchecked")
   public T open(String name, String... params) {
-    driver.get(StringUtils.appendIfMissing(BASE_URL, "/") + getPath(name, params));
+    String url = StringUtils.appendIfMissing(BASE_URL, "/") + getPath(name, params);
+    Allure.step("Открыть страницу " + url);
+    driver.get(url);
     return (T) this;
   }
 
@@ -55,6 +59,7 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
   @SuppressWarnings("unchecked")
   public T open() {
     String url = StringUtils.appendIfMissing(BASE_URL, "/") + getPath();
+    Allure.step("Открыть страницу " + url);
     driver.get(url);
     return (T) this;
   }

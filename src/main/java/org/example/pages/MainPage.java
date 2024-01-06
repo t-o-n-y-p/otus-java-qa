@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
+
+import io.qameta.allure.Step;
 import org.example.annotations.Path;
 import org.example.components.CourseCard;
 import org.example.exceptions.ProgramCardNotFoundException;
@@ -29,6 +31,7 @@ public class MainPage extends AbsBasePage<MainPage> {
   /**
    .
    */
+  @Step("Выбрать курс {programName}")
   public void selectProgramByName(String programName) {
     getProgramCards()
         .stream()
@@ -45,6 +48,7 @@ public class MainPage extends AbsBasePage<MainPage> {
   /**
    .
    */
+  @Step("Выбрать курс, который стартует раньше всех")
   public void selectProgramByEarliestStartDate() {
     selectProgramByReduce(
         (e1, e2) -> e1.getValue().isBefore(e2.getValue()) ? e1 : e2);
@@ -53,6 +57,7 @@ public class MainPage extends AbsBasePage<MainPage> {
   /**
    .
    */
+  @Step("Выбрать курс, который стартует позже всех")
   public void selectProgramByLatestStartDate() {
     selectProgramByReduce(
         (e1, e2) -> e1.getValue().isAfter(e2.getValue()) ? e1 : e2);
