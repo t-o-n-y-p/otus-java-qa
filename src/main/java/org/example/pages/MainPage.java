@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
-
 import io.qameta.allure.Step;
 import org.example.annotations.Path;
 import org.example.components.CourseCard;

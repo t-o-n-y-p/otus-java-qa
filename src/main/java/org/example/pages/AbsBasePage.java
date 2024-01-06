@@ -2,7 +2,6 @@ package org.example.pages;
 
 import java.util.Arrays;
 import java.util.Optional;
-
 import io.qameta.allure.Allure;
 import org.apache.commons.lang3.StringUtils;
 import org.example.annotations.Path;
