@@ -4,7 +4,7 @@ node('maven') {
             currentBuild.description = "User: ${env.BUILD_USER}"
         }
 
-        params = readYaml text: env.YAML_CONFIG ?: [:]
+        def params = readYaml text: env.YAML_CONFIG ?: [:]
         params.each {
             k, v -> env.setProperty(k, v)
         }
@@ -13,37 +13,40 @@ node('maven') {
             checkout scm
         }
         stage("Running tests") {
-            status = sh(
-                    script: "mvn test -P ${env.BROWSER_NAME}",
-                    returnStatus: true
-            )
+            def status = sh script: "mvn test -P ${env.BROWSER_NAME}", returnStatus: true
             if (status == 1) {
-                currentBuild.status = "UNSTABLE"
+                currentBuild.result = "UNSTABLE"
             }
         }
         stage("Allure report") {
             allure(
-                    results: ["$WORKSPACE/target/allure-results"],
+                    results: [[path: "target/allure-results"]],
                     disabled: false,
                     reportBuildPolicy: 'ALWAYS'
             )
         }
         stage("Send to Telegram") {
-            summary = junit testResults: "$WORKSPACE/target/surefire-reports/TEST-*.xml"
-            message = "Test Summary\n\nTotal: ${summary.totalCount}\nPassed: ${summary.passCount}\nFailed: ${summary.failCount}\nSkipped: ${summary.skipCount}"
+            def summary = junit testResults: "**/target/surefire-reports/*.xml"
+            String message = """Test Summary
+                               |
+                               |Total: ${summary.totalCount}
+                               |Passed: ${summary.passCount}
+                               |Failed: ${summary.failCount}
+                               |Skipped: ${summary.skipCount}""".stripMargin()
             withCredentials([
                     string(credentialsId: 'botToken', variable: 'BOT_TOKEN'),
                     string(credentialsId: 'chatIds', variable: 'CHAT_IDS')
             ]) {
-                $CHAT_IDS.tokenize(',').each {
-                    chatId ->
-                        body = ['chatId': chatId]
-                        httpRequest consoleLogResponseBody: true,
-                                    contentType: 'APPLICATION_JSON',
-                                    httpMode: 'POST',
-                                    requestBody: body,
-                                    url: "https://api.telegram.org/bot$BOT_TOKEN/sendMessage",
-                                    validResponseCodes: '200'
+                env.CHAT_IDS.tokenize(',').each { chatId ->
+                    httpRequest consoleLogResponseBody: true,
+                                contentType: 'APPLICATION_JSON',
+                                httpMode: 'POST',
+                                requestBody: """{\"chat_id\":$chatId,\"text\":\"$message\",
+                                                |\"reply_markup\":{\"inline_keyboard\":[[{
+                                                |\"text\":\"Test report\",
+                                                |\"url\":\"${env.BUILD_URL.replace('localhost', '127.0.0.1')}allure\"
+                                                |}]]}}""".stripMargin(),
+                                url: "https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage"
                 }
             }
         }
