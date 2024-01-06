@@ -8,7 +8,7 @@
     parameters:
       - string:
           name: BRANCH
-          default: master
+          default: selenoid
           description: "Branch with tests"
       - text:
           name: YAML_CONFIG
