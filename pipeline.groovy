@@ -10,7 +10,7 @@ node('maven') {
         }
 
         stage("Checkout") {
-            scm checkout
+            checkout scm
         }
         stage("Running tests") {
             status = sh(
