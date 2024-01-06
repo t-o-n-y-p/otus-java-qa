@@ -10,7 +10,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./selenoid:/etc/selenoid:ro
     command:
-      - "-container-network=selenoid"
+      - "-container-network=qa"
       - "-limit=12"
 
   ggr:
