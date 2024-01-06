@@ -5,6 +5,7 @@
     scm:
       - git:
           url: git@github.com:t-o-n-y-p/otus-java-qa.git
+          credentials-id: github
           branches:
             - FETCH_HEAD
           refspec: ${BRANCH}
