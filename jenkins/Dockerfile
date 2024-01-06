@@ -1,3 +1,3 @@
-FROM jenkins/slave:alpine
+FROM jenkins/agent:jdk17
 USER root
-RUN apk update && apk add openjdk17-jdk maven
+RUN apt update && apt install -y maven

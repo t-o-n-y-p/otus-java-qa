@@ -95,7 +95,7 @@ services:
     ports:
       - "5005:5005"
     volumes:
-      - ./registry:/var/lib/registry
+      - /var/lib/registry:/var/lib/registry
     environment:
       - REGISTRY_HTTP_ADDR=0.0.0.0:5005
 
