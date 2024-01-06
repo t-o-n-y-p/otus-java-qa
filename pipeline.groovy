@@ -36,7 +36,7 @@ node('maven') {
                     string(credentialsId: 'chatIds', variable: 'CHAT_IDS')
             ]) {
                 $CHAT_IDS.tokenize(',').each {
-                    chatId -> {
+                    chatId ->
                         body = ['chatId': chatId]
                         httpRequest consoleLogResponseBody: true,
                                     contentType: 'APPLICATION_JSON',
@@ -44,7 +44,6 @@ node('maven') {
                                     requestBody: body,
                                     url: "https://api.telegram.org/bot$BOT_TOKEN/sendMessage",
                                     validResponseCodes: '200'
-                    }
                 }
             }
         }
