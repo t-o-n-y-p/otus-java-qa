@@ -11,40 +11,16 @@ node('maven') {
 
         def jobs = [:]
         if (env.TEST_TYPE == 'android') {
-            jobs['android'] = {
-                sh script: "git checkout -b ${env.TEST_BRANCH} origin/${env.TEST_BRANCH}"
-                def status = sh script: "mvn test", returnStatus: true
-                if (status == 1) {
-                    currentBuild.result = "UNSTABLE"
-                }
-            }
+            jobs['android'] = getTestRunJob("mvn test")
         }
         if (env.TEST_TYPE == 'ui') {
-            jobs['ui'] = {
-                sh script: "git checkout -b ${env.TEST_BRANCH} origin/${env.TEST_BRANCH}"
-                def status = sh script: "mvn test -P ${env.BROWSER_NAME}", returnStatus: true
-                if (status == 1) {
-                    currentBuild.result = "UNSTABLE"
-                }
-            }
+            jobs['ui'] = getTestRunJob("mvn test -P ${env.BROWSER_NAME}")
         }
         if (env.TEST_TYPE == 'api') {
-            jobs['api'] = {
-                sh script: "git checkout -b ${env.TEST_BRANCH} origin/${env.TEST_BRANCH}"
-                def status = sh script: "mvn test", returnStatus: true
-                if (status == 1) {
-                    currentBuild.result = "UNSTABLE"
-                }
-            }
+            jobs['api'] = getTestRunJob("mvn test")
         }
         if (env.TEST_TYPE == 'wiremock') {
-            jobs['wiremock'] = {
-                sh script: "git checkout -b ${env.TEST_BRANCH} origin/${env.TEST_BRANCH}"
-                def status = sh script: "mvn test -P ${env.STUB_TYPE}", returnStatus: true
-                if (status == 1) {
-                    currentBuild.result = "UNSTABLE"
-                }
-            }
+            jobs['wiremock'] = getTestRunJob("mvn test -P ${env.STUB_TYPE}")
         }
 
         stage("Checkout") {
@@ -84,6 +60,16 @@ node('maven') {
                             url: "https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage"
                 }
             }
+        }
+    }
+}
+
+Closure getTestRunJob(String mvn) {
+    return {
+        sh script: "git checkout -b ${env.TEST_BRANCH} origin/${env.TEST_BRANCH}"
+        def status = sh script: mvn, returnStatus: true
+        if (status == 1) {
+            currentBuild.result = "UNSTABLE"
         }
     }
 }
