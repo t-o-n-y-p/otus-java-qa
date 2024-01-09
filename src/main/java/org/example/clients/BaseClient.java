@@ -48,12 +48,7 @@ public abstract class BaseClient {
   protected ResponseSpecification getDefaultResponseSpecification() {
     return expect()
         .statusCode(equalTo(HttpStatus.SC_OK))
-        // dirty workaround of rest assured bug
-        .contentType(
-                is(in(
-                        Arrays.stream(getContentType().getContentTypeStrings())
-                                .flatMap(e -> Stream.of(e, e + "\r\n"))
-                                .toList())))
+        .contentType(getContentType())
         .logDetail(LogDetail.ALL);
   }
 
