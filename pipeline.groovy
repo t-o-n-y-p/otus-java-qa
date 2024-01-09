@@ -27,6 +27,7 @@ node('maven') {
             checkout scm
         }
         stage("Running tests") {
+            sh script: "git checkout -b ${env.TEST_BRANCH} origin/${env.TEST_BRANCH}"
             parallel jobs
         }
         stage("Allure report") {
@@ -66,7 +67,6 @@ node('maven') {
 
 Closure getTestRunJob(String mvn) {
     return {
-        sh script: "git checkout -b ${env.TEST_BRANCH} origin/${env.TEST_BRANCH}"
         def status = sh script: mvn, returnStatus: true
         if (status == 1) {
             currentBuild.result = "UNSTABLE"
