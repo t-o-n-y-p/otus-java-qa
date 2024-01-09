@@ -10,6 +10,12 @@
           name: BRANCH
           default: stubs
           description: "Branch with tests"
+      - text:
+          name: YAML_CONFIG
+          default: |
+            STUB_TYPE: ui
+          description: |
+            STUB_TYPE: ui | api
     pipeline-scm:
       scm:
         - otus-java-qa
