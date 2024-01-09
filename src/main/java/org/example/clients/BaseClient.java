@@ -13,7 +13,6 @@ import org.apache.http.HttpStatus;
 import org.example.support.GuiceScoped;
 import org.hamcrest.Matchers;
 import org.wiremock.integrations.testcontainers.WireMockContainer;
-
 import java.util.Arrays;
 import java.util.stream.Stream;
 
