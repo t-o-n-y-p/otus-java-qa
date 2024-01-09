@@ -43,8 +43,8 @@ node('maven') {
             }
         }
 
-        env.setProperty('BRANCH', env.TEST_BRANCH)
         stage("Checkout") {
+            env.setProperty('BRANCH', env.TEST_BRANCH)
             checkout scm
         }
         stage("Running tests") {
