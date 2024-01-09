@@ -12,6 +12,7 @@ node('maven') {
         def jobs = [:]
         if (env.TEST_TYPE == 'android') {
             jobs['android'] = {
+                sh script: "git checkout ${env.TEST_BRANCH}"
                 def status = sh script: "mvn test", returnStatus: true
                 if (status == 1) {
                     currentBuild.result = "UNSTABLE"
@@ -20,6 +21,7 @@ node('maven') {
         }
         if (env.TEST_TYPE == 'ui') {
             jobs['ui'] = {
+                sh script: "git checkout ${env.TEST_BRANCH}"
                 def status = sh script: "mvn test -P ${env.BROWSER_NAME}", returnStatus: true
                 if (status == 1) {
                     currentBuild.result = "UNSTABLE"
@@ -28,6 +30,7 @@ node('maven') {
         }
         if (env.TEST_TYPE == 'api') {
             jobs['api'] = {
+                sh script: "git checkout ${env.TEST_BRANCH}"
                 def status = sh script: "mvn test", returnStatus: true
                 if (status == 1) {
                     currentBuild.result = "UNSTABLE"
@@ -36,6 +39,7 @@ node('maven') {
         }
         if (env.TEST_TYPE == 'wiremock') {
             jobs['wiremock'] = {
+                sh script: "git checkout ${env.TEST_BRANCH}"
                 def status = sh script: "mvn test -P ${env.STUB_TYPE}", returnStatus: true
                 if (status == 1) {
                     currentBuild.result = "UNSTABLE"
@@ -44,7 +48,6 @@ node('maven') {
         }
 
         stage("Checkout") {
-            env.setProperty('BRANCH', env.TEST_BRANCH)
             checkout scm
         }
         stage("Running tests") {
