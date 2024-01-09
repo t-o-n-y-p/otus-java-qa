@@ -8,3 +8,4 @@
       - 'api-tests'
       - 'wiremock-tests'
       - 'android-tests'
+      - 'test-runner'

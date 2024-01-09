@@ -1,0 +1,27 @@
+- job-template:
+    name: 'test-runner'
+    project-type: pipeline
+    concurrent: true
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 10
+    parameters:
+      - string:
+          name: BRANCH
+          default: jenkins
+          description: "Branch with runner pipeline"
+      - text:
+          name: YAML_CONFIG
+          default: |
+            TEST_TYPE: ui
+            TEST_BRANCH: selenoid
+            BROWSER_NAME: chrome
+          description: |
+            TEST_TYPE: ui | api | android | wiremock
+            TEST_BRANCH: any branch with tests of type above
+            [if TEST_TYPE = ui] BROWSER_NAME: chrome | firefox
+            [if TEST_TYPE = wiremock] STUB_TYPE: ui | api
+    pipeline-scm:
+      scm:
+        - otus-java-qa
+      script-path: pipeline.groovy
