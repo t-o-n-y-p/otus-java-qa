@@ -26,13 +26,7 @@ public class AndroidDriverProvider implements WebDriverProvider {
     options.setPlatformName("Android");
     options.setDeviceName("Pixel_3a_API_34_extension_level_7_x86_64");
     options.setPlatformVersion("14.0");
-    String app = new File(
-        URLDecoder.decode(
-            getClass().getClassLoader().getResource("Andy.apk").getPath(),
-            StandardCharsets.UTF_8))
-        .toPath()
-        .toString();
-    options.setApp(app);
+    options.setApp("http://localhost:50000/android/Andy.apk");
     options.setAppActivity(".MainActivity");
     options.fullReset();
 
