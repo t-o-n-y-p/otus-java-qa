@@ -12,7 +12,7 @@
     "status": 200,
     "bodyFileName": "courses.xml",
     "headers": {
-      "Content-Type": "application/xml;charset=UTF-8"
+      "Content-Type": "application/xml"
     }
   }
 }
