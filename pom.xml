@@ -28,17 +28,19 @@
         <jaxb-api.version>2.3.0</jaxb-api.version>
         <jackson-databind.version>2.16.0</jackson-databind.version>
         <webdriver.remote.server>http://localhost/wd/hub</webdriver.remote.server>
+        <aspectj.version>1.9.20.1</aspectj.version>
+        <allure.version>2.25.0</allure.version>
     </properties>
 
     <profiles>
         <profile>
-            <id>web-stub</id>
+            <id>ui</id>
             <properties>
                 <suite>org.example.suite.WiremockWebStubSuite</suite>
             </properties>
         </profile>
         <profile>
-            <id>api-stub</id>
+            <id>api</id>
             <properties>
                 <suite>org.example.suite.WiremockApiStubSuite</suite>
             </properties>
@@ -154,6 +156,32 @@
             <version>${jackson-databind.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-assertj</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-rest-assured</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -167,6 +195,9 @@
                     <systemPropertyVariables>
                         <webdriver.remote.server>${webdriver.remote.server}</webdriver.remote.server>
                     </systemPropertyVariables>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -201,6 +232,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+                </configuration>
             </plugin>
         </plugins>
     </build>
