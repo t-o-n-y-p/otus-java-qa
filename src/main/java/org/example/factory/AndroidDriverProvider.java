@@ -36,7 +36,7 @@ public class AndroidDriverProvider implements WebDriverProvider {
     options.setAppActivity(".MainActivity");
     options.fullReset();
 
-    AndroidDriver driver = new AndroidDriver(new URL("http://localhost:4723/"), options);
+    AndroidDriver driver = new AndroidDriver(new URL("http://192.168.56.1:4723/"), options);
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     return driver;
   }
