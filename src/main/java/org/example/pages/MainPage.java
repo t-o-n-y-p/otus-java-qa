@@ -8,6 +8,8 @@ import com.codeborne.selenide.SelenideElement;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.function.Consumer;
+
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.assertj.core.api.SoftAssertions;
 import org.example.components.AbsComponentCollection;
@@ -34,6 +36,7 @@ public class MainPage extends AbsBasePage {
   private final SelenideElement messageInput = $x("//android.widget.EditText");
   private final SelenideElement sendButton = $x("//android.widget.EditText//following-sibling::android.view.ViewGroup");
 
+  @Step("Если появился алерт, нажать ОК")
   public MainPage skipAlert() {
     if (alert.is(visible)) {
       alert.getOkButton().click();
@@ -41,6 +44,7 @@ public class MainPage extends AbsBasePage {
     return this;
   }
 
+  @Step("Проверить приветствие на главном экране")
   public MainPage checkHelloMessage() {
     assertThat(chatMessages.size())
         .as("Hello message not found or multiple messages found")
@@ -51,6 +55,7 @@ public class MainPage extends AbsBasePage {
     return this;
   }
 
+  @Step("Отправить сообщение {text}")
   public MainPage sendMessage(String text) {
     messageInput
         .shouldBe(visible.because("Message input field not found on the main page"))
@@ -61,6 +66,7 @@ public class MainPage extends AbsBasePage {
     return this;
   }
 
+  @Step("Проверить наличие ответов в чате")
   @SuppressWarnings("unchecked")
   public MainPage waitForReplies(List<String> replies) {
     waiter.until(
@@ -84,6 +90,7 @@ public class MainPage extends AbsBasePage {
     return this;
   }
 
+  @Step("Дождаться появления сообщения-упражнения")
   public MainPage waitForExerciseMessage() {
     waiter.until(
         () -> getLastChatMessage().isExerciseMessage(),
@@ -91,6 +98,7 @@ public class MainPage extends AbsBasePage {
     return this;
   }
 
+  @Step("Дождаться появления ответа и следом за ним сообщения-упражнения")
   public MainPage waitForExerciseMessageWithReply(String reply) {
     waiter.until(
         () -> getLastChatMessage().isExerciseMessage()
@@ -99,6 +107,7 @@ public class MainPage extends AbsBasePage {
     return this;
   }
 
+  @Step("Дождаться появления сообщения-урока")
   public MainPage waitForMuchManyLessonMessage() {
     waiter.until(
         () -> getLastChatMessage().isMuchManyLessonMessage(),
@@ -106,6 +115,7 @@ public class MainPage extends AbsBasePage {
     return this;
   }
 
+  @Step("Дождаться появления ответа и следом за ним сообщения-урока")
   public MainPage waitForMuchManyLessonMessageWithReply() {
     waiter.until(
         () -> getLastChatMessage().isMuchManyLessonMessage()

@@ -3,11 +3,13 @@ package org.example.pages;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
+import io.qameta.allure.Step;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class GrammarPage extends AbsBasePage {
 
+  @Step("Выбрать урок {lesson}")
   public void selectLesson(Lesson lesson) {
     $x(
         "//android.widget.ScrollView/android.view.ViewGroup"
