@@ -8,7 +8,6 @@ import com.codeborne.selenide.SelenideElement;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.function.Consumer;
-
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.assertj.core.api.SoftAssertions;
