@@ -2,7 +2,7 @@ package org.example.clients;
 
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
 import com.google.inject.Inject;
 import io.restassured.filter.log.LogDetail;
@@ -11,7 +11,11 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.http.HttpStatus;
 import org.example.support.GuiceScoped;
+import org.hamcrest.Matchers;
 import org.wiremock.integrations.testcontainers.WireMockContainer;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public abstract class BaseClient {
 
@@ -45,7 +49,12 @@ public abstract class BaseClient {
   protected ResponseSpecification getDefaultResponseSpecification() {
     return expect()
         .statusCode(equalTo(HttpStatus.SC_OK))
-        .contentType(getContentType())
+        // dirty workaround of rest assured bug
+        .contentType(
+                is(in(
+                        Arrays.stream(getContentType().getContentTypeStrings())
+                                .flatMap(e -> Stream.of(e, e + "\r\n"))
+                                .toList())))
         .logDetail(LogDetail.ALL);
   }
 
