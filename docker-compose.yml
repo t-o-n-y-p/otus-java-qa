@@ -70,7 +70,7 @@ services:
     ports:
       - "50000:8080"
     volumes:
-      - ./wiremock:/home/wiremock:ro
+      - ./home/wiremock:/home/wiremock:ro
 
   jenkins:
     container_name: jenkins
