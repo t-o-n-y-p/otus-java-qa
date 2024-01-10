@@ -13,12 +13,15 @@ node('maven') {
             checkout scm
         }
 
-        Map<String, Run> jobs = [:]
+        def jobs = [:]
+        def runningJobs = []
         env.TEST_TYPE.tokenize(',').each { String type ->
             jobs[type] = {
                 node('maven') {
                     stage("Running $type tests") {
-                        build(job: "$type-tests", parameters: [text(name: "YAML_CONFIG", value: env.YAML_CONFIG)])
+                        runningJobs.add(
+                                build(job: "$type-tests", parameters: [text(name: "YAML_CONFIG", value: env.YAML_CONFIG)])
+                        )
                     }
                 }
             }
@@ -26,11 +29,10 @@ node('maven') {
         parallel jobs
 
         stage("Allure report") {
-            env.TEST_TYPE.tokenize(',').each { String type ->
-                print(jobs[type])
+            runningJobs.each { job ->
                 copyArtifacts filter: "**/allure-results.tar.gz",
-                        projectName: "$type-tests",
-                        selector: specific(jobs[type].getNumber() as String),
+                        projectName: job.getProjectName(),
+                        selector: specific(job.getNumber() as String),
                         optional: true
                 sh "tar -xvf allure-results.tar.gz -C ./allure-results"
             }
