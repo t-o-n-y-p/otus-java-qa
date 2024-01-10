@@ -5,6 +5,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 import com.google.inject.Inject;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -41,6 +42,7 @@ public abstract class BaseClient {
         .basePath(getBasePath())
         .contentType(getContentType())
         .accept(getContentType())
+        .filter(new AllureRestAssured())
         .log()
         .all();
   }
