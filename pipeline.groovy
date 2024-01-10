@@ -27,6 +27,7 @@ node('maven') {
 
         stage("Allure report") {
             env.TEST_TYPE.tokenize(',').each { String type ->
+                print(jobs[type])
                 copyArtifacts filter: "**/allure-results.tar.gz",
                         projectName: "$type-tests",
                         selector: specific(jobs[type].getNumber() as String),
