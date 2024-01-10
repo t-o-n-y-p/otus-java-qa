@@ -24,5 +24,22 @@ node('maven') {
             }
         }
         parallel jobs
+
+        stage("Allure report") {
+            env.TEST_TYPE.tokenize(',').each { String type ->
+                copyArtifacts filter: "**/allure-results.tar.gz",
+                        projectName: "$type-tests",
+                        selector: specific(jobs[type].getNumber() as String),
+                        optional: true
+                sh "tar -xvf allure-results.tar.gz -C ./allure-results"
+            }
+            allure([
+                    results: [[path: 'allure-results']],
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS'
+            ])
+        }
     }
 }
