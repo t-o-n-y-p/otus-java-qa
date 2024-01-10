@@ -32,7 +32,7 @@ node('maven') {
             runningJobs.each { job ->
                 copyArtifacts filter: "**/allure-results.tar.gz",
                         projectName: job.getProjectName(),
-                        selector: specific(job.getNumber() as String),
+                        selector: specific("${job.getNumber()}"),
                         optional: true
                 sh "tar -xvf allure-results.tar.gz -C ./allure-results"
             }
