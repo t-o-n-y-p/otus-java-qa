@@ -13,7 +13,7 @@ node('maven') {
             checkout scm
         }
 
-        def jobs = [:]
+        Map<String, Run> jobs = [:]
         env.TEST_TYPE.tokenize(',').each { String type ->
             jobs[type] = {
                 node('maven') {
