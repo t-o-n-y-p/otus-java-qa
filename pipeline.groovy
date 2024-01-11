@@ -19,6 +19,11 @@ node('maven') {
             }
         }
         stage("Allure report") {
+            sh "tar -czf allure-results.tar.gz target/allure-results"
+            archiveArtifacts artifacts: "**/allure-results.tar.gz",
+                    allowEmptyArchive: true,
+                    fingerprint: true,
+                    onlyIfSuccessful: true
             allure(
                     results: [[path: "target/allure-results"]],
                     disabled: false,
