@@ -46,6 +46,10 @@ node('maven') {
                     disabled: false,
                     reportBuildPolicy: 'ALWAYS'
             )
+            def summary = junit testResults: "surefire-reports/*.xml"
+            if (summary.totalCount != summary.passCount) {
+                currentBuild.result = 'UNSTABLE'
+            }
         }
     }
 }
