@@ -30,7 +30,7 @@ node('maven') {
 
         stage("Allure report") {
             runningJobs.each { job ->
-                copyArtifacts filter: "**/allure-results.tar.gz",
+                copyArtifacts filter: "allure-results.tar.gz",
                         projectName: job.getProjectName(),
                         selector: specific("${job.getNumber()}"),
                         optional: true
