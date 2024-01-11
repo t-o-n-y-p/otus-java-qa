@@ -36,13 +36,11 @@ node('maven') {
                         optional: true
                 sh "tar -xvf allure-results.tar.gz --one-top-level=allure-results --strip-components=2"
             }
-            allure([
+            allure(
                     results: [[path: 'allure-results']],
-                    includeProperties: false,
-                    jdk: '',
-                    properties: [],
+                    disabled: false,
                     reportBuildPolicy: 'ALWAYS'
-            ])
+            )
         }
     }
 }
