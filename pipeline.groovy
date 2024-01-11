@@ -20,7 +20,11 @@ node('maven') {
                 node('maven') {
                     stage("Running $type tests") {
                         runningJobs.add(
-                                build(job: "$type-tests", parameters: [text(name: "YAML_CONFIG", value: env.YAML_CONFIG)])
+                                build(
+                                        job: "$type-tests",
+                                        propagate: false,
+                                        parameters: [text(name: "YAML_CONFIG", value: env.YAML_CONFIG)]
+                                )
                         )
                     }
                 }
