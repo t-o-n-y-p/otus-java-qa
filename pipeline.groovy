@@ -34,8 +34,7 @@ node('maven') {
                         projectName: job.getProjectName(),
                         selector: specific("${job.getNumber()}"),
                         optional: true
-                sh "ls -la"
-                sh "tar -xvf allure-results.tar.gz -C ./allure-results"
+                sh "tar -xvf allure-results.tar.gz --one-top-level=allure-results"
             }
             allure([
                     results: [[path: 'allure-results']],
