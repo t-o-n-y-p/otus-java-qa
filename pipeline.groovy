@@ -34,11 +34,12 @@ node('maven') {
 
         stage("Allure report") {
             runningJobs.each { job ->
-                copyArtifacts filter: "allure-results.tar.gz",
+                copyArtifacts filter: "*.tar.gz",
                         projectName: job.getProjectName(),
                         selector: specific("${job.getNumber()}"),
                         optional: true
                 sh "tar -xvf allure-results.tar.gz --one-top-level=allure-results --strip-components=2"
+                sh "tar -xvf surefire-reports.tar.gz --one-top-level=surefire-reports --strip-components=2"
             }
             allure(
                     results: [[path: 'allure-results']],
