@@ -20,7 +20,8 @@ node('maven') {
         }
         stage("Allure report") {
             sh "tar -czf allure-results.tar.gz target/allure-results"
-            archiveArtifacts artifacts: "**/allure-results.tar.gz",
+            sh "tar -czf surefire-reports.tar.gz target/surefire-reports"
+            archiveArtifacts artifacts: "*.tar.gz",
                     allowEmptyArchive: true,
                     fingerprint: true,
                     onlyIfSuccessful: true
