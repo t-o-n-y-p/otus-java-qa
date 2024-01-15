@@ -1,19 +1,16 @@
 node('maven') {
     timestamps {
         wrap([$class: 'BuildUser']) {
-            currentBuild.description = "User: ${env.BUILD_USER}\n${env.YAML_CONFIG}"
+            currentBuild.description = "USER: ${env.BUILD_USER}\n${env.YAML_CONFIG}"
         }
 
         def params = readYaml text: env.YAML_CONFIG ?: [:]
-        params.each {
-            k, v -> env.setProperty(k, v)
-        }
 
         stage("Checkout") {
             checkout scm
         }
         stage("Running tests") {
-            def status = sh script: "mvn test -P ${env.STUB_TYPE}", returnStatus: true
+            def status = sh script: "mvn test -P ${params.STUB_TYPE}", returnStatus: true
             if (status == 1) {
                 currentBuild.result = "UNSTABLE"
             }
