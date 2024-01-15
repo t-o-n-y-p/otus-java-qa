@@ -1,24 +1,27 @@
 node('maven') {
     timestamps {
         wrap([$class: 'BuildUser']) {
-            currentBuild.description = "User: ${env.BUILD_USER}"
+            currentBuild.description = "USER: ${env.BUILD_USER}\n${env.YAML_CONFIG}"
         }
 
         def params = readYaml text: env.YAML_CONFIG ?: [:]
-        params.each {
-            k, v -> env.setProperty(k, v)
-        }
 
         stage("Checkout") {
             checkout scm
         }
         stage("Running tests") {
-            def status = sh script: "mvn test -P ${env.BROWSER_NAME}", returnStatus: true
+            def status = sh script: "mvn test -P ${params.BROWSER_NAME}", returnStatus: true
             if (status == 1) {
                 currentBuild.result = "UNSTABLE"
             }
         }
         stage("Allure report") {
+            sh "tar -czf allure-results.tar.gz target/allure-results"
+            sh "tar -czf surefire-reports.tar.gz target/surefire-reports"
+            archiveArtifacts artifacts: "*.tar.gz",
+                    allowEmptyArchive: true,
+                    fingerprint: true,
+                    onlyIfSuccessful: true
             allure(
                     results: [[path: "target/allure-results"]],
                     disabled: false,
