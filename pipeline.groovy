@@ -15,7 +15,7 @@ node('maven') {
 
         def jobs = [:]
         def runningJobs = []
-        env.TEST_TYPE.tokenize(',').each { String type ->
+        env.TEST_TYPE.each { String type ->
             jobs[type] = {
                 node('maven') {
                     stage("Running $type tests") {

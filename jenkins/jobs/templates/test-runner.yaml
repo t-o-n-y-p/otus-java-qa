@@ -13,12 +13,17 @@
       - text:
           name: YAML_CONFIG
           default: |
-            TEST_TYPE: ui
+            TEST_TYPE: 
+              - ui
             BROWSER_NAME: chrome
           description: |
-            TEST_TYPE: ui | api | android | wiremock
-            [if TEST_TYPE = ui] BROWSER_NAME: chrome | firefox
-            [if TEST_TYPE = wiremock] STUB_TYPE: ui | api
+            TEST_TYPE: array of [ui | api | android | wiremock]
+            
+            if TEST_TYPE contains 'ui':
+            BROWSER_NAME: chrome | firefox
+            
+            if TEST_TYPE contains 'wiremock':
+            STUB_TYPE: ui | api
     pipeline-scm:
       scm:
         - otus-java-qa
