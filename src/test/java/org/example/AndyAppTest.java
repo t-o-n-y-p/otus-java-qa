@@ -2,7 +2,6 @@ package org.example;
 
 import com.google.inject.Inject;
 import java.util.List;
-
 import io.qameta.allure.Epic;
 import org.example.components.ChatMessage;
 import org.example.components.MainMenu;
