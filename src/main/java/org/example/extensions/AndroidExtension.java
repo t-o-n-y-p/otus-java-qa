@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
-public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, AfterEachCallback, TestWatcher {
+public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, AfterEachCallback, AfterTestExecutionCallback {
 
   private Injector injector;
 
@@ -43,7 +43,7 @@ public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, 
   }
 
   @Override
-  public void testFailed(ExtensionContext context, Throwable cause) {
+  public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
     addScreenshot(Selenide.screenshot(OutputType.BYTES));
   }
 
