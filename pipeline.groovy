@@ -1,7 +1,7 @@
 node('maven') {
     timestamps {
         wrap([$class: 'BuildUser']) {
-            currentBuild.description = "User: ${env.BUILD_USER}"
+            currentBuild.description = "User: ${env.BUILD_USER}\n${env.YAML_CONFIG}"
         }
 
         def params = readYaml text: env.YAML_CONFIG ?: [:]
