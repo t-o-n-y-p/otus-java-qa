@@ -3,7 +3,6 @@ package org.example.pages;
 import com.google.inject.Inject;
 import java.util.List;
 import java.util.function.Consumer;
-
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.example.annotations.Path;
