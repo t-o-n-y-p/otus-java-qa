@@ -3,6 +3,8 @@ package org.example.pages;
 import com.google.inject.Inject;
 import java.util.List;
 import java.util.function.Consumer;
+
+import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.example.annotations.Path;
 import org.example.components.CourseData;
@@ -25,6 +27,7 @@ public class AllCoursesPage extends AbsBasePage<AllCoursesPage> {
         .toList();
   }
 
+  @Step("Сравнить данные курсов на странице с данными из API")
   public void compareCourseDataTo(List<org.example.models.CourseData> expectedCourseData) {
     SoftAssertions softly = new SoftAssertions();
     Consumer<CourseData>[] checks = expectedCourseData.stream()

@@ -3,6 +3,8 @@ package org.example.pages;
 import com.google.inject.Inject;
 import java.util.List;
 import java.util.function.Consumer;
+
+import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.example.annotations.Path;
 import org.example.components.UserData;
@@ -25,6 +27,7 @@ public class AllUsersPage extends AbsBasePage<AllUsersPage> {
         .toList();
   }
 
+  @Step("Сравнить данные пользователей на странице с данными из API")
   public void compareUserDataTo(List<org.example.models.UserData> expectedUserData) {
     SoftAssertions softly = new SoftAssertions();
     Consumer<UserData>[] checks = expectedUserData.stream()

@@ -1,6 +1,7 @@
 package org.example.pages;
 
 import com.google.inject.Inject;
+import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.example.annotations.Template;
 import org.example.annotations.UrlTemplate;
@@ -26,6 +27,7 @@ public class UserScorePage extends AbsBasePage<UserScorePage> {
     return Integer.parseInt(driver.findElement(By.tagName("h4")).getText());
   }
 
+  @Step("Сравнить оценку пользователя на странице с данными из API")
   public void compareUserScoreTo(UserScore userScore) {
     SoftAssertions.assertSoftly(softly -> {
       softly.assertThat(getName())
