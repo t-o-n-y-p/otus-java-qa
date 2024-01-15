@@ -5,17 +5,13 @@ node('maven') {
         }
 
         def params = readYaml text: env.YAML_CONFIG ?: [:]
-        params.each {
-            k, v -> env.setProperty(k, v)
-        }
-
         stage("Checkout") {
             checkout scm
         }
 
         def jobs = [:]
         def runningJobs = []
-        env.TEST_TYPE.each { String type ->
+        params.TEST_TYPE.each { String type ->
             jobs[type] = {
                 node('maven') {
                     stage("Running $type tests") {
