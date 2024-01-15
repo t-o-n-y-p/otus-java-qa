@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -20,6 +21,7 @@ public abstract class BaseClient {
         .basePath(getBasePath())
         .contentType(ContentType.JSON)
         .accept(ContentType.JSON)
+        .filter(new AllureRestAssured())
         .log()
         .all();
   }

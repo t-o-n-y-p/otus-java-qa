@@ -6,6 +6,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
 import com.google.inject.Inject;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import io.restassured.common.mapper.TypeRef;
 import java.util.List;
 import org.assertj.core.api.SoftAssertions;
@@ -15,6 +17,7 @@ import org.example.extensions.PetStoreExtension;
 import org.example.petstore.Pet;
 import org.example.petstore.PetStatus;
 import org.example.petstore.User;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,6 +28,8 @@ import org.junit.jupiter.params.provider.EnumSource;
  */
 @ExtendWith(PetStoreExtension.class)
 @SuppressWarnings("unused")
+@Epic("Тесты PetStore API")
+@Story("Позитивные тесты")
 public class PetStorePositiveTest {
 
   @Inject
@@ -44,6 +49,7 @@ public class PetStorePositiveTest {
    (со всеми параметрами).
    */
   @Test
+  @DisplayName("Проверка создания пользователя с максимальным телом запроса")
   public void testCreateFullUser() {
     String message =
         userClient
@@ -80,6 +86,7 @@ public class PetStorePositiveTest {
    */
   @ParameterizedTest
   @EnumSource(PetStatus.class)
+  @DisplayName("Проверка поиска питомцев в статусе")
   public void testGetPetByValidStatus(PetStatus status) {
     Pet createdPet =
         petClient
