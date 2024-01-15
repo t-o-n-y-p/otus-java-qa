@@ -44,7 +44,8 @@ public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, 
 
   @Override
   public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
-    addScreenshot(Selenide.screenshot(OutputType.BYTES));
+    extensionContext.getExecutionException()
+            .ifPresent(e -> addScreenshot(Selenide.screenshot(OutputType.BYTES)));
   }
 
   @Attachment(value = "Screenshot", type = "image/png")
