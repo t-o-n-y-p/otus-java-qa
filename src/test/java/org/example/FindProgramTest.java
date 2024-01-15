@@ -1,7 +1,7 @@
 package org.example;
 
 import com.google.inject.Inject;
-import io.qameta.allure.Story;
+import io.qameta.allure.Epic;
 import org.apache.commons.lang3.StringUtils;
 import org.example.extensions.GuiceExtension;
 import org.example.pages.LessonPage;
@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  .
  */
 @ExtendWith(GuiceExtension.class)
-@Story("UI тесты сайта Otus на Selenoid")
+@Epic("UI тесты сайта Otus на Selenoid")
 public class FindProgramTest {
 
   @Inject
