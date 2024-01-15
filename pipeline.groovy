@@ -31,6 +31,7 @@ node('maven') {
         stage("Send to Telegram") {
             def summary = junit testResults: "**/target/surefire-reports/*.xml"
             String message = """Test Summary
+                               |${currentBuild.description}
                                |
                                |Total: ${summary.totalCount}
                                |Passed: ${summary.passCount}
