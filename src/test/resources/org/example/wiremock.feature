@@ -1,6 +1,5 @@
 #language: ru
 
-@EPIC:Тесты UI заглушек Wiremock
 Функционал: Wiremock
 
   Сценарий: Проверка стаба всех курсов
