@@ -1,10 +1,11 @@
 node('maven') {
     timestamps {
         wrap([$class: 'BuildUser']) {
-            currentBuild.description = "User: ${env.BUILD_USER}\n${env.YAML_CONFIG}"
+            currentBuild.description = "USER: ${env.BUILD_USER}\n${env.YAML_CONFIG}"
         }
 
         def params = readYaml text: env.YAML_CONFIG ?: [:]
+
         stage("Checkout") {
             checkout scm
         }
