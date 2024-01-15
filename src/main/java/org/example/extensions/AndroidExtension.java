@@ -2,17 +2,19 @@ package org.example.extensions;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.example.factory.AndroidDriverProvider;
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeAllCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
-public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, AfterEachCallback {
+public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, AfterEachCallback, TestWatcher {
 
   private Injector injector;
 
@@ -38,5 +40,15 @@ public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, 
   @Override
   public void afterEach(ExtensionContext extensionContext) throws Exception {
     Selenide.closeWebDriver();
+  }
+
+  @Override
+  public void testFailed(ExtensionContext context, Throwable cause) {
+    addScreenshot(Selenide.screenshot(OutputType.BYTES));
+  }
+
+  @Attachment(value = "Screenshot", type = "image/png")
+  private byte[] addScreenshot(byte[] screenshot) {
+    return screenshot;
   }
 }
