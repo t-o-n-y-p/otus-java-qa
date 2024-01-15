@@ -1,7 +1,7 @@
 node('maven') {
     timestamps {
         wrap([$class: 'BuildUser']) {
-            currentBuild.description = "User: ${env.BUILD_USER}"
+            currentBuild.description = "USER: ${env.BUILD_USER}"
         }
 
         stage("Checkout") {
@@ -14,6 +14,12 @@ node('maven') {
             }
         }
         stage("Allure report") {
+            sh "tar -czf allure-results.tar.gz target/allure-results"
+            sh "tar -czf surefire-reports.tar.gz target/surefire-reports"
+            archiveArtifacts artifacts: "*.tar.gz",
+                    allowEmptyArchive: true,
+                    fingerprint: true,
+                    onlyIfSuccessful: true
             allure(
                     results: [[path: "target/allure-results"]],
                     disabled: false,
@@ -23,6 +29,7 @@ node('maven') {
         stage("Send to Telegram") {
             def summary = junit testResults: "**/target/surefire-reports/*.xml"
             String message = """Test Summary
+                               |${currentBuild.description}
                                |
                                |Total: ${summary.totalCount}
                                |Passed: ${summary.passCount}

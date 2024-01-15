@@ -2,8 +2,10 @@ package org.example.extensions;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.example.factory.AndroidDriverProvider;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -18,6 +20,11 @@ public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, 
   public void beforeAll(ExtensionContext extensionContext) throws Exception {
     Configuration.browserSize = null;
     Configuration.browser = AndroidDriverProvider.class.getName();
+    SelenideLogger.addListener(
+            "AllureSelenide",
+            new AllureSelenide()
+                    .screenshots(true)
+                    .savePageSource(true));
   }
 
   @Override

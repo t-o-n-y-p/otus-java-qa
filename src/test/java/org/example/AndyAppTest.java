@@ -2,6 +2,8 @@ package org.example;
 
 import com.google.inject.Inject;
 import java.util.List;
+
+import io.qameta.allure.Epic;
 import org.example.components.ChatMessage;
 import org.example.components.MainMenu;
 import org.example.extensions.AndroidExtension;
@@ -9,11 +11,13 @@ import org.example.pages.ExercisePage;
 import org.example.pages.GrammarPage;
 import org.example.pages.MainPage;
 import org.example.pages.OnboardingPage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @SuppressWarnings("unused")
 @ExtendWith(AndroidExtension.class)
+@Epic("Тесты приложения Andy")
 public class AndyAppTest {
 
   @Inject
@@ -26,6 +30,7 @@ public class AndyAppTest {
   private GrammarPage grammarPage;
 
   @Test
+  @DisplayName("Приветствие от бота")
   void testGreetings() {
     onboardingPage.skipOnboardingItems();
     mainPage
@@ -38,6 +43,7 @@ public class AndyAppTest {
   }
 
   @Test
+  @DisplayName("Выполнение упражнения")
   void testExercise() {
     onboardingPage.skipOnboardingItems();
     mainPage
@@ -55,6 +61,7 @@ public class AndyAppTest {
   }
 
   @Test
+  @DisplayName("Прохождение урока Much - Many")
   void testMuchManyLesson() {
     onboardingPage.skipOnboardingItems();
     mainPage
