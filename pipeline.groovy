@@ -1,7 +1,7 @@
 node('maven') {
     timestamps {
         wrap([$class: 'BuildUser']) {
-            currentBuild.description = "USER: ${env.BUILD_USER}"
+            currentBuild.description = "USER: ${env.BUILD_USER}\n${env.YAML_CONFIG ?: ""}"
         }
 
         stage("Checkout") {

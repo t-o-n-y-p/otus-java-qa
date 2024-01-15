@@ -22,9 +22,7 @@ public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, 
     Configuration.browser = AndroidDriverProvider.class.getName();
     SelenideLogger.addListener(
             "AllureSelenide",
-            new AllureSelenide()
-                    .screenshots(true)
-                    .savePageSource(true));
+            new AllureSelenide().includeSelenideSteps(false));
   }
 
   @Override
