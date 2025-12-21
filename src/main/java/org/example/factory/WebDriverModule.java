@@ -6,7 +6,7 @@ import com.google.inject.Singleton;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("unused")
-public class GuiceModule extends AbstractModule {
+public class WebDriverModule extends AbstractModule {
 
   @Provides
   @Singleton
