@@ -21,4 +21,8 @@ public class WebDriverFactory {
     WebDriver driver = webDriverManager.capabilities(browserSettings.configureDriver()).create();
     return new EventFiringDecorator<>(styleUpdateListener).decorate(driver);
   }
+
+  public void quit(WebDriver driver) {
+    webDriverManager.quit(driver);
+  }
 }

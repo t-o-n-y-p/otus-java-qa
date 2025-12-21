@@ -2,6 +2,7 @@ package org.example.extensions;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import org.example.factory.WebDriverFactory;
 import org.example.factory.WebDriverFactoryModule;
 import org.example.factory.WebDriverModule;
 import org.junit.jupiter.api.extension.AfterEachCallback;
@@ -25,7 +26,9 @@ public class UiExtension implements TestInstancePostProcessor, AfterEachCallback
   public void afterEach(ExtensionContext extensionContext) {
     Injector currentInjector = injector.get();
     if (currentInjector != null) {
-      currentInjector.getInstance(WebDriver.class).quit();
+      WebDriver driver = currentInjector.getInstance(WebDriver.class);
+      WebDriverFactory webDriverFactory = currentInjector.getInstance(WebDriverFactory.class);
+      webDriverFactory.quit(driver);
     }
   }
 }
