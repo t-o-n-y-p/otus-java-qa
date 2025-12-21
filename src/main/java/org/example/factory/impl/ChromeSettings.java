@@ -6,6 +6,8 @@ public class ChromeSettings implements BrowserSettings<ChromeOptions> {
 
   @Override
   public ChromeOptions configureDriver() {
-    return new ChromeOptions();
+    ChromeOptions chromeOptions = new ChromeOptions();
+    chromeOptions.addArguments("--start-maximized");
+    return chromeOptions;
   }
 }

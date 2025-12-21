@@ -11,10 +11,7 @@ public class CommonWaiter {
   private final WebDriverWait wait;
 
   public CommonWaiter(WebDriver driver) {
-    Duration explicitWaitTimeout =
-        Duration.ofMillis(
-            Integer.parseInt(System.getProperty("webdriver.timeouts.implicitly-wait", "5000")));
-    wait = new WebDriverWait(driver, explicitWaitTimeout);
+    wait = new WebDriverWait(driver, Duration.ofSeconds(10));
   }
 
   public boolean waitForCondition(ExpectedCondition<?> condition) {
