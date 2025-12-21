@@ -1,10 +1,8 @@
 package org.example.factory.impl;
 
-/**
- .
- */
-public interface BrowserSettings<T> {
+import org.openqa.selenium.Capabilities;
+
+public interface BrowserSettings<T extends Capabilities> {
 
   T configureDriver();
-
 }

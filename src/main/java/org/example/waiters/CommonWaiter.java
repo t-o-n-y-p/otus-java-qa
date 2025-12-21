@@ -6,29 +6,23 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-/**
- .
- */
 public class CommonWaiter {
-
-  private static final Duration DURATION = Duration.ofMillis(
-      Integer.parseInt(System.getProperty("webdriver.timeouts.implicitly-wait", "5000")));
 
   private final WebDriverWait wait;
 
   public CommonWaiter(WebDriver driver) {
-    wait = new WebDriverWait(driver, DURATION);
+    Duration explicitWaitTimeout =
+        Duration.ofMillis(
+            Integer.parseInt(System.getProperty("webdriver.timeouts.implicitly-wait", "5000")));
+    wait = new WebDriverWait(driver, explicitWaitTimeout);
   }
 
-  /**
-   .
-   */
-  public boolean waitForCondition(ExpectedCondition<Boolean> condition) {
+  public boolean waitForCondition(ExpectedCondition<?> condition) {
     try {
-      return wait.until(condition);
-    } catch (TimeoutException ex) {
+      wait.until(condition);
+      return true;
+    } catch (TimeoutException ignored) {
       return false;
     }
   }
-
 }

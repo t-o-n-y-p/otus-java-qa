@@ -1,50 +1,45 @@
 package org.example.factory;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import java.time.Duration;
+import lombok.AllArgsConstructor;
 import org.example.exceptions.BrowserNotSupportedException;
 import org.example.factory.impl.BrowserSettings;
 import org.example.factory.impl.ChromeSettings;
-import org.example.factory.impl.FirefoxSettings;
-import org.example.listeners.ActionsListener;
+import org.example.listeners.StyleUpdateListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 
-/**
- .
- */
+@Singleton
+@AllArgsConstructor(onConstructor_ = @Inject)
 public class WebDriverFactory {
 
-  public static final String BROWSER_NAME = System.getProperty("browser", "chrome");
+  private StyleUpdateListener styleUpdateListener;
 
-  /**
-   .
-   */
   public WebDriver create() {
-    switch (BROWSER_NAME) {
+    String browser = System.getProperty("browser");
+    switch (browser) {
       case "chrome" -> {
         WebDriverManager.chromedriver().setup();
         BrowserSettings<ChromeOptions> browserSettings = new ChromeSettings();
-        WebDriver driver = new EventFiringDecorator<>(new ActionsListener())
-            .decorate(new ChromeDriver(browserSettings.configureDriver()));
+        WebDriver driver =
+            new EventFiringDecorator<>(styleUpdateListener)
+                .decorate(new ChromeDriver(browserSettings.configureDriver()));
         driver.manage().window().maximize();
         return driver;
       }
-      case "firefox" -> {
-        WebDriverManager.firefoxdriver().setup();
-        BrowserSettings<FirefoxOptions> browserSettings = new FirefoxSettings();
-        WebDriver driver = new EventFiringDecorator<>(new ActionsListener())
-            .decorate(new FirefoxDriver(browserSettings.configureDriver()));
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        return driver;
-      }
-      default -> throw new BrowserNotSupportedException(BROWSER_NAME);
+      default -> throw new BrowserNotSupportedException(browser);
     }
   }
 
+  public static void init() {
+    String browser = System.getProperty("browser");
+    switch (browser) {
+      case "chrome" -> WebDriverManager.chromedriver().setup();
+      default -> throw new BrowserNotSupportedException(browser);
+    }
+  }
 }

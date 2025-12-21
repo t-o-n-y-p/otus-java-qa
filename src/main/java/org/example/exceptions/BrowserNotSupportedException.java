@@ -1,8 +1,5 @@
 package org.example.exceptions;
 
-/**
- .
- */
 public class BrowserNotSupportedException extends RuntimeException {
 
   public BrowserNotSupportedException(String browserName) {

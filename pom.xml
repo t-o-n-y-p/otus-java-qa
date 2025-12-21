@@ -13,15 +13,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <webdriver.manager.version>5.5.3</webdriver.manager.version>
-        <selenium.java.version>4.13.0</selenium.java.version>
-        <junit.version>5.10.0</junit.version>
-        <surefire.plugin.version>3.1.2</surefire.plugin.version>
-        <base.url>https://otus.ru</base.url>
-        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
-        <spotbugs-maven-plugin.version>4.7.2.1</spotbugs-maven-plugin.version>
-        <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
-        <commons-lang3.version>3.13.0</commons-lang3.version>
+        <base.url>https://auto.mail.ru</base.url>
     </properties>
 
     <profiles>
@@ -29,14 +21,6 @@
             <id>chrome</id>
             <properties>
                 <browser>chrome</browser>
-                <suite>org.example.suite.HomeworkOneSuite</suite>
-            </properties>
-        </profile>
-        <profile>
-            <id>firefox</id>
-            <properties>
-                <browser>firefox</browser>
-                <suite>org.example.suite.HomeworkOneSuite</suite>
             </properties>
         </profile>
     </profiles>
@@ -45,41 +29,32 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>${webdriver.manager.version}</version>
+            <version>6.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>${selenium.java.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit</groupId>
-            <artifactId>junit-bom</artifactId>
-            <version>${junit.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
+            <version>4.39.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>${junit.version}</version>
+            <version>5.14.1</version>
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-engine</artifactId>
-            <version>1.10.0</version>
-            <scope>test</scope>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.14.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
-            <version>${selenium.java.version}</version>
+            <version>4.39.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
+            <version>3.20.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -89,13 +64,13 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <version>1.18.42</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.24.2</version>
+            <version>3.27.6</version>
         </dependency>
 
     </dependencies>
@@ -105,9 +80,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.plugin.version}</version>
+                <version>3.5.4</version>
                 <configuration>
-                    <test>${suite}</test>
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
                         <browser>${browser}</browser>
@@ -117,22 +91,21 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
+                <version>3.14.1</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs-maven-plugin.version}</version>
+                <version>4.9.8.2</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin.version}</version>
+                <version>3.6.0</version>
                 <configuration>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <configLocation>${project.build.sourceDirectory}/../resources/checkstyle.xml</configLocation>
@@ -146,6 +119,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify.fmt</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>2.29</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <filesNamePattern>^((?!Generated).)*\.java$</filesNamePattern>
+                    <skip>false</skip>
+                    <skipSortingImports>false</skipSortingImports>
+                    <style>google</style>
+                </configuration>
             </plugin>
         </plugins>
     </build>
