@@ -3,7 +3,7 @@ package org.example;
 import com.google.inject.Inject;
 import org.example.extensions.UiExtension;
 import org.example.pages.MainPage;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @SuppressWarnings("unused")
@@ -12,7 +12,7 @@ public class MainPageTest {
 
   @Inject private MainPage mainPage;
 
-  @Test
+  @RepeatedTest(3)
   void checkClickArticleTile() {
     String title = mainPage.open().getPhotoTitleByIndex(1);
     mainPage.clickArticleByTitle(title).pageHeaderShouldBeSameAs(title);
