@@ -13,5 +13,5 @@ public @interface UrlTemplate {
 
   String name() default "default";
 
-  String template();
+  String value();
 }

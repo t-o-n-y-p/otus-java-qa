@@ -12,29 +12,27 @@ import org.openqa.selenium.support.FindBy;
 
 @SuppressWarnings("unused")
 @Singleton
-@UrlTemplate(template = "/")
+@UrlTemplate(value = "/")
 public class MainPage extends AbsBasePage<MainPage> {
 
   @FindBy(css = "a.photo__title")
   private List<WebElement> articles;
 
-  private final ArticlePage articlePage;
-
   @Inject
-  public MainPage(WebDriver driver, ArticlePage articlePage) {
+  public MainPage(WebDriver driver) {
     super(driver);
-    this.articlePage = articlePage;
   }
 
   public String getPhotoTitleByIndex(int index) {
     assertThat(articles)
         .as("Индекс больше количества элементов списка")
         .hasSizeGreaterThanOrEqualTo(index);
-    return articles.get(index - 1).getText();
+    String result = articles.get(index - 1).getText();
+    assertThat(result).as("Заголовок фото %d пуст", index).isNotBlank();
+    return result;
   }
 
-  public ArticlePage clickArticleByTitle(String title) {
+  public void clickArticleByTitle(String title) {
     clickFirstElementByPredicate(articles, e -> title.equals(e.getText()));
-    return articlePage;
   }
 }

@@ -32,7 +32,7 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
     if (templates.size() != 1) {
       throw new PathNotFoundException(name);
     }
-    return templates.get(0).template().formatted((Object[]) params);
+    return templates.get(0).value().formatted((Object[]) params);
   }
 
   private String getPath() {
@@ -42,7 +42,7 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
     if (templates.size() != 1) {
       throw new PathNotFoundException(clazz);
     }
-    return templates.get(0).template();
+    return templates.get(0).value();
   }
 
   public T open(String name, String... params) {
