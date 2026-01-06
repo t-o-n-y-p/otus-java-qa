@@ -6,7 +6,7 @@ import org.example.annotations.UrlTemplate;
 import org.openqa.selenium.WebDriver;
 
 @Singleton
-@UrlTemplate(value = "article/%1$s")
+@UrlTemplate(value = "/article/%1$s")
 public class ArticlePage extends AbsBasePage<ArticlePage> {
 
   @Inject

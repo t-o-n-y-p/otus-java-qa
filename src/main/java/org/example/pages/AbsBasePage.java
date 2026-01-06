@@ -1,9 +1,6 @@
 package org.example.pages;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
-import org.apache.commons.lang3.Strings;
 import org.example.annotations.UrlTemplate;
 import org.example.exceptions.PathNotFoundException;
 import org.example.pageobject.AbsPageObject;
@@ -26,13 +23,13 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
 
   private String getPath(String name, String... params) {
     List<UrlTemplate> templates =
-        AnnotationSupport.findRepeatableAnnotations(getClass(), UrlTemplate.class).stream()
-            .filter(a -> name.equals(a.name()))
-            .toList();
-    if (templates.size() != 1) {
-      throw new PathNotFoundException(name);
+        AnnotationSupport.findRepeatableAnnotations(getClass(), UrlTemplate.class);
+    for (UrlTemplate template : templates) {
+      if (name.equals(template.name())) {
+        return template.value().formatted((Object[]) params);
+      }
     }
-    return templates.get(0).value().formatted((Object[]) params);
+    throw new PathNotFoundException(name);
   }
 
   private String getPath() {
@@ -46,20 +43,12 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
   }
 
   public T open(String name, String... params) {
-    String url = Strings.CS.appendIfMissing(baseUrl, "/") + getPath(name, params);
-    driver.get(url);
+    driver.get(baseUrl + getPath(name, params));
     return (T) this;
   }
 
   public T open() {
-    String url = Strings.CS.appendIfMissing(baseUrl, "/") + getPath();
-    driver.get(url);
-    return (T) this;
-  }
-
-  public T pageHeaderShouldBeSameAs(String value) {
-    assertThat(header).as("Обнаружен пустой заголовок").isNotNull();
-    assertThat(header.getText()).as("Неожидаемый текст заголовка").isEqualTo(value);
+    driver.get(baseUrl + getPath());
     return (T) this;
   }
 }

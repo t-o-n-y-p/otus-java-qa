@@ -31,8 +31,4 @@ public class MainPage extends AbsBasePage<MainPage> {
     assertThat(result).as("Заголовок фото %d пуст", index).isNotBlank();
     return result;
   }
-
-  public void clickArticleByTitle(String title) {
-    clickFirstElementByPredicate(articles, e -> title.equals(e.getText()));
-  }
 }
