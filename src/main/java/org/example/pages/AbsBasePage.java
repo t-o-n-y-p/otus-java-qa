@@ -1,5 +1,7 @@
 package org.example.pages;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 import org.example.annotations.UrlTemplate;
 import org.example.exceptions.PathNotFoundException;
@@ -49,6 +51,12 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsPageObjec
 
   public T open() {
     driver.get(baseUrl + getPath());
+    return (T) this;
+  }
+
+  public T pageHeaderShouldBeSameAs(String value) {
+    assertThat(header).as("Обнаружен пустой заголовок").isNotNull();
+    assertThat(header.getText()).as("Неожидаемый текст заголовка").isEqualTo(value);
     return (T) this;
   }
 }
