@@ -12,7 +12,7 @@ import org.openqa.selenium.support.FindBy;
 
 @SuppressWarnings("unused")
 @Singleton
-@UrlTemplate(value = "/")
+@UrlTemplate("/")
 public class MainPage extends AbsBasePage<MainPage> {
 
   @FindBy(css = "a.photo__title")
