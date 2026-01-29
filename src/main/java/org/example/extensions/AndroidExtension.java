@@ -1,55 +1,45 @@
 package org.example.extensions;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
-import com.codeborne.selenide.logevents.SelenideLogger;
-import com.google.inject.Guice;
 import com.google.inject.Injector;
-import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
-import io.qameta.allure.selenide.AllureSelenide;
-import org.example.factory.AndroidDriverProvider;
-import org.junit.jupiter.api.extension.*;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import org.example.factory.AndroidDriverFactory;
+import org.example.factory.AndroidDriverModule;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.TestInstancePostProcessor;
+import org.openqa.selenium.WebDriver;
+import java.util.Objects;
 
-public class AndroidExtension implements BeforeAllCallback, BeforeEachCallback, AfterEachCallback, AfterTestExecutionCallback {
+@NullMarked
+public class AndroidExtension
+    implements TestInstancePostProcessor, BeforeEachCallback, AfterEachCallback {
 
-  private Injector injector;
+  private final Injector parentInjector = InjectorProvider.getParent();
+  private final ThreadLocal<@Nullable Injector> injectors = new ThreadLocal<>();
 
   @Override
-  public void beforeAll(ExtensionContext extensionContext) throws Exception {
-    Configuration.browserSize = null;
-    Configuration.browser = AndroidDriverProvider.class.getName();
-    SelenideLogger.addListener(
-            "AllureSelenide",
-            new AllureSelenide().includeSelenideSteps(false));
+  public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
+    Injector currentInjector = parentInjector.createChildInjector(new AndroidDriverModule());
+    injectors.set(currentInjector);
+    currentInjector.injectMembers(testInstance);
   }
 
   @Override
-  public void beforeEach(ExtensionContext extensionContext) throws Exception {
+  public void beforeEach(ExtensionContext context) {
+    WebDriver driver = Objects.requireNonNull(injectors.get()).getInstance(WebDriver.class);
+    WebDriverRunner.setWebDriver(driver);
     Selenide.open();
-    extensionContext.getTestInstance()
-        .ifPresent(instance -> {
-          injector = Guice.createInjector(new AndroidModule());
-          injector.injectMembers(instance);
-        });
   }
 
   @Override
-  public void afterEach(ExtensionContext extensionContext) throws Exception {
-    Selenide.closeWebDriver();
-  }
-
-  @Override
-  public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
-    extensionContext.getExecutionException()
-            .ifPresent(e -> addScreenshot(Selenide.screenshot(OutputType.BYTES)));
-  }
-
-  @Attachment(value = "Screenshot", type = "image/png")
-  private byte[] addScreenshot(byte[] screenshot) {
-    return screenshot;
+  public void afterEach(ExtensionContext extensionContext) {
+    Injector currentInjector = Objects.requireNonNull(injectors.get());
+    AndroidDriverFactory factory = currentInjector.getInstance(AndroidDriverFactory.class);
+    WebDriver driver = currentInjector.getInstance(WebDriver.class);
+    factory.quit(driver);
   }
 }

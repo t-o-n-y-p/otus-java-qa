@@ -1,21 +1,19 @@
 package org.example.components;
 
-import static com.codeborne.selenide.appium.SelenideAppium.$x;
-
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebElementCondition;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.example.pageobject.AbsPageObject;
 
-/**
- * .
- */
-@RequiredArgsConstructor
-public abstract class AbsComponent extends AbsPageObject {
+@AllArgsConstructor
+@SuppressWarnings("unchecked")
+public abstract class AbsComponent<T extends AbsComponent<T>> extends AbsPageObject {
 
-  protected final String xpath;
+  protected final SelenideElement root;
 
-  public boolean is(WebElementCondition condition) {
-    return $x(xpath).is(condition);
+  public T shouldBe(WebElementCondition... conditions) {
+    root.shouldBe(conditions);
+    return (T) this;
   }
 
 }

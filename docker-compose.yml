@@ -1,0 +1,36 @@
+services:
+  wiremock:
+    container_name: wiremock
+    image: wiremock/wiremock:3.13.2
+    volumes:
+      - ./wiremock:/home/wiremock:ro
+
+  android-1:
+    container_name: android-1
+    depends_on:
+      - wiremock
+    image: budtmo/docker-android:emulator_12.0_v3.1.1-p0
+    ports:
+      - "6080:6080"
+      - "4723:4723"
+    environment:
+      - DEVICE="Samsung Galaxy S6"
+      - WEB_VNC=true
+      - APPIUM=true
+    devices:
+      - "/dev/kvm"
+
+  android-2:
+    container_name: android-2
+    depends_on:
+      - wiremock
+    image: budtmo/docker-android:emulator_14.0_v3.1.1-p0
+    ports:
+      - "6081:6080"
+      - "4724:4723"
+    environment:
+      - DEVICE="Samsung Galaxy S6"
+      - WEB_VNC=true
+      - APPIUM=true
+    devices:
+      - "/dev/kvm"
