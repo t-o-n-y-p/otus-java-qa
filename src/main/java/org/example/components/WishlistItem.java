@@ -31,7 +31,7 @@ public class WishlistItem extends AbsComponent<WishlistItem> {
 
   public void tapEdit() {
     editButton
-        .shouldBe(visible.because("Кнопка редактирование списка желаний не видна на экране"))
+        .shouldBe(visible.because("Кнопка редактирования списка желаний не видна на экране"))
         .click();
   }
 }

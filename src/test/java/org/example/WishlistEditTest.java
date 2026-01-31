@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @SuppressWarnings("unused")
 @ExtendWith(AndroidExtension.class)
-public class LoginTest {
+public class WishlistEditTest {
 
   @Inject private LoginPage loginPage;
   @Inject private MyWishlistsPage myWishlistsPage;
@@ -28,7 +28,7 @@ public class LoginTest {
         .tapEditWishlist(1);
     editWishlistPage
         .assertEditWishlistTitle("Изменить список желаний")
-        .edit(wishlistTitle, newWishlistDescription);
+        .editDescription(newWishlistDescription);
     myWishlistsPage
         .assertNumberOfWishlists(1)
         .assertWishlistTitle(1, wishlistTitle)
